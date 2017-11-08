@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { TestPage } from '../test/test';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
+import { Profile } from '../../models/profile';
 
 @Component({
   selector: 'page-home',
@@ -9,8 +11,11 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class HomePage {
 
+  profileData: FirebaseObjectObservable<Profile>
+
   constructor(
     private auth: AngularFireAuth,
+    private afDatabase: AngularFireDatabase,
     private toast: ToastController,
     public navCtrl: NavController, 
     public navParams: NavParams) {
@@ -23,6 +28,8 @@ export class HomePage {
           message: `Bem vindo!`,
           duration: 3000
         }).present();
+
+        this.profileData = this.afDatabase.object(`profile/${data.uid}`)
       } else {
         this.toast.create({
           message: `Uruário não encontrado!`,
