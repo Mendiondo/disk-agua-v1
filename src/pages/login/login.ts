@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 import { HomePage } from '../home/home';
 
 @IonicPage()
@@ -31,6 +32,32 @@ export class LoginPage {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  loginWithGoogle() {
+    try {
+      const result = this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+      console.log(result);
+      if (result) {
+        this.navCtrl.setRoot(HomePage);
+      }
+    } catch (e) {
+      console.error(e);
+    }    
+  }
+
+  loginWithFacebook() {
+    try {
+      //const result = this.auth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider);
+      const result = this.auth.auth.signInAndRetrieveDataWithCredential(new firebase.auth.GoogleAuthProvider);
+
+      console.log(result);
+      if (result) {
+        this.navCtrl.setRoot(HomePage);
+      }
+    } catch (e) {
+      console.error(e);
+    }    
   }
 
   register() {

@@ -22,6 +22,17 @@
     <ion-label color="primary" floating>Senha</ion-label>
     <ion-input type="password" [(ngModel)]="user.password"></ion-input>
   </ion-item>
-  <button ion-button (click)="login(user)" >login</button>
-  <button ion-button color="light" (click)="register()" >register</button>
+  <div text-center>
+    <button ion-button (click)="login(user)" >login</button>  
+    <button ion-button color="light" (click)="register()" >register</button>
+ </div>
+
+  <button ion-button block color="danger" (click)="loginWithGoogle()" >
+    <ion-icon></ion-icon>    
+    Login with Google
+  </button>
+  <button ion-button block color="primary" (click)="loginWithFacebook()" >
+    <ion-icon></ion-icon>    
+    Login with Facebook
+  </button>
 </ion-content>
