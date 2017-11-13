@@ -29,4 +29,8 @@ export class RegisterPage {
     }
   }
 
+  backToLogin() {
+    this.navCtrl.push('LoginPage');
+  }
+
 }

@@ -21,6 +21,9 @@
   <ion-item>
     <ion-label color="primary" floating>Senha</ion-label>
     <ion-input type="password" [(ngModel)]="user.password"></ion-input>
-  </ion-item>  
-  <button ion-button color="light" (click)="register(user)" >register</button>
+  </ion-item>    
+  <div text-center>
+    <button ion-button (click)="register(user)" >Salvar</button>  
+    <button ion-button color="light" (click)="backToLogin()">Voltar</button>
+  </div>
 </ion-content>

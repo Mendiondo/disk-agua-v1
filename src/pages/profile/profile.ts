@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 import { Profile } from '../../models/profile';
 import { HomePage } from '../home/home';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 @IonicPage()
 @Component({
@@ -12,14 +13,32 @@ import { HomePage } from '../home/home';
 })
 export class ProfilePage {
 
-  profile = {} as Profile;
+  //profile = {} as Profile;
+  profile: FirebaseObjectObservable<Profile>
 
-  constructor(private auth: AngularFireAuth, private afDatabase: AngularFireDatabase,
-    public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private auth: AngularFireAuth, 
+    private afDatabase: AngularFireDatabase,
+    private toast: ToastController,
+    public navCtrl: NavController, 
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+    this.auth.authState.subscribe(data => {
+      if (data && data.email && data.uid) {
+        this.toast.create({
+          message: `Bem vindo!`,
+          duration: 3000
+        }).present();
+
+        this.profile = this.afDatabase.object(`profile/${data.uid}`)
+      } else {
+        this.toast.create({
+          message: `Uruário não encontrado!`,
+          duration: 3000
+        }).present();
+      }      
+    })
   }
 
   createProfile() {

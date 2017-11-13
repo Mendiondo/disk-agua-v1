@@ -40,13 +40,9 @@ export class HomePage {
   }
 
   logout() {
-    try {
-      const result = this.auth.auth.signOut();
-      console.log(result);
-    } catch(e) {
-      console.error(e);
-    }
-    
+    this.auth.auth.signOut().then(auth => {
+      this.navCtrl.setRoot('LoginPage');
+    }).catch((e) => console.error(e));        
   }
 
   goToTestPage() {

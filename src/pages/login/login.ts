@@ -22,7 +22,19 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  async login(user: User) {
+  async login(user: User) {    
+    this.auth.auth.signInWithEmailAndPassword(user.email, user.password).then(auth => {
+      this.navCtrl.setRoot('ProfilePage');
+    }).catch((e) => console.error(e));    
+  }
+
+  loginWithGoogle() {    
+    this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(auth => {
+      this.navCtrl.setRoot(HomePage);
+    }).catch((e) => console.error(e));        
+  }
+
+  bkp(user: User) {
     try {
       const result = this.auth.auth.signInWithEmailAndPassword(user.email, user.password);
       console.log(result);
@@ -32,10 +44,14 @@ export class LoginPage {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  loginWithGoogle() {
+    
+    
+    
     try {
+      this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(auth => {
+        this.navCtrl.setRoot(HomePage);
+      }).catch((e) => console.error(e));
+
       const result = this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
       console.log(result);
       if (result) {
@@ -43,7 +59,7 @@ export class LoginPage {
       }
     } catch (e) {
       console.error(e);
-    }    
+    }  
   }
 
   loginWithFacebook() {
