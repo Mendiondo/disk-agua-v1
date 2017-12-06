@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { Profile } from '../../models/profile';
 import { HomePage } from '../home/home';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
@@ -13,8 +13,8 @@ import { ToastController } from 'ionic-angular/components/toast/toast-controller
 })
 export class ProfilePage {
 
-  //profile = {} as Profile;
-  profile: FirebaseObjectObservable<Profile>
+  profile = {} as Profile;
+  //profile: FirebaseObjectObservable<Profile>
 
   constructor(private auth: AngularFireAuth, 
     private afDatabase: AngularFireDatabase,
@@ -23,7 +23,7 @@ export class ProfilePage {
     public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
+  bkp() {
     this.auth.authState.subscribe(data => {
       if (data && data.email && data.uid) {
         this.toast.create({
@@ -31,7 +31,7 @@ export class ProfilePage {
           duration: 3000
         }).present();
 
-        this.profile = this.afDatabase.object(`profile/${data.uid}`)
+       // this.profile = this.afDatabase.object(`profile/${data.uid}`)
       } else {
         this.toast.create({
           message: `Uruário não encontrado!`,

@@ -1,24 +1,12 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
+<ion-header >
+  <ion-navbar>    
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content padding>  
+  <p>Nome: {{(profileData | async)?.username}}</p>
+  <p>Endereço: {{(profileData | async)?.firstName}}</p>
+  <p>Número: {{(profileData | async)?.lastName}}</p>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle (click)="goToTestPage()" >Test Page</button>
-  <button ion-button secondary menuToggle>Toggle Menu</button>
   <button ion-button (click)="logout()">Sair</button>
-
-  <p>User Name: {{(profileData | async)?.username}}</p>
-  <p>First Name: {{(profileData | async)?.firstName}}</p>
-  <p>Last Name: {{(profileData | async)?.lastName}}</p>
 </ion-content>
