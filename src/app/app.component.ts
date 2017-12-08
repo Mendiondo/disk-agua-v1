@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { ListPage } from '../pages/list/list';
 import { TestPage } from '../pages/test/test';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +18,17 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, afAuth: AngularFireAuth) {
+    const authObserver = afAuth.authState.subscribe( user => {
+      if (user) {
+        this.rootPage = HomePage
+        authObserver.unsubscribe();
+      } else {
+        this.rootPage = 'LoginPage';
+        authObserver.unsubscribe();
+      }
+    });
+
     this.initializeApp();
 
     // used for an example of ngFor and navigation

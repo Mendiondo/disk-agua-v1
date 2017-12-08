@@ -13,7 +13,7 @@ import { ToastController } from 'ionic-angular/components/toast/toast-controller
 })
 export class ProfilePage {
 
-  profile = {} as Profile;
+  profile = {} as Profile;  
   //profile: FirebaseObjectObservable<Profile>
 
   constructor(private auth: AngularFireAuth, 
@@ -46,6 +46,10 @@ export class ProfilePage {
       this.afDatabase.object(`profile/${auth.uid}`).set(this.profile)
       .then(() => this.navCtrl.setRoot(HomePage))
     })
+  }
+
+  isReadonly() {
+    return true;
   }
 
 }
