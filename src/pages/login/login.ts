@@ -4,7 +4,7 @@ import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { HomePage } from '../home/home';
-//import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Platform } from 'ionic-angular';
 import { GooglePlus } from '@ionic-native/google-plus';
 
 @IonicPage()
@@ -14,13 +14,14 @@ import { GooglePlus } from '@ionic-native/google-plus';
 })
 export class LoginPage {
 
-  user = {} as User;
+  user = {} as User;  
 
   constructor(
     private auth: AngularFireAuth,
     //private inAppBrowser: InAppBrowser,
     public navCtrl: NavController,
-    public navParams: NavParams,
+    public navParams: NavParams,   
+    private platform: Platform,
     private googlePlus: GooglePlus) {
     firebase.auth().languageCode = 'pt';
   }
@@ -36,18 +37,27 @@ export class LoginPage {
   }
 
   loginWithGoogle() {
-    this.googlePlus.login({      
-      'offline': true,
-      "webClientId": '766581663061-5j4469fmth9kn5uuj75kbeevkprqpov9.apps.googleusercontent.com'
-    })
-      .then(res => {
-        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-          .then(success => {
-            this.navCtrl.setRoot('ProfilePage');
-            console.log("Firebase success: " + JSON.stringify(success));
-          })
-          .catch(error => console.log("Firebase failure: " + JSON.stringify(error)));
-      }).catch(err => console.error("Error: ", err));
+    if (this.platform.is('cordova')) {
+      this.googlePlus.login({      
+        'offline': true,
+        "webClientId": '766581663061-5j4469fmth9kn5uuj75kbeevkprqpov9.apps.googleusercontent.com'
+      })
+        .then(res => {
+          firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+            .then(success => {
+              this.navCtrl.setRoot('ProfilePage');
+              console.log("Firebase success: " + JSON.stringify(success));
+            })
+            .catch(error => console.log("Firebase failure: " + JSON.stringify(error)));
+        }).catch(err => console.error("Error: ", err));
+
+      } else {
+        this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(auth => {
+          this.navCtrl.setRoot('ProfilePage');
+        }).catch((e) => console.error(e));      
+    }
+
+    
   }
 
   loginWithFacebook() {

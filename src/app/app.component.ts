@@ -14,14 +14,14 @@ import { HomePage } from '../pages/home/home';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = 'LoginPage';
+  rootPage: any;
 
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, afAuth: AngularFireAuth) {
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
-        this.rootPage = HomePage
+        this.rootPage = 'ProfilePage';
         authObserver.unsubscribe();
       } else {
         this.rootPage = 'LoginPage';
