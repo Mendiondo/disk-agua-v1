@@ -1,6 +1,7 @@
 export interface Profile {
-    username: string;
-    firstName: string;
-    lastName: string;
+    nomeCompleto: string;
+    endereco: string;
+    numero: string;
+    complemento: string;
     email: string;
 }

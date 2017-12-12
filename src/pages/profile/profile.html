@@ -5,19 +5,23 @@
 <ion-content padding>
   <ion-item>
     <ion-label floating>Nome Completo</ion-label>
-    <ion-input [(ngModel)]="profile.username"></ion-input>
+    <ion-input [(ngModel)]="profile.nomeCompleto"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Email</ion-label>    
     <ion-input [(ngModel)]="profile.email" [readonly]="isReadonly()"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label floating>Endereço</ion-label>
-    <ion-input [(ngModel)]="profile.firstName"></ion-input>
+    <ion-label floating>Selecione seu Endereço</ion-label>
+    <ion-input [(ngModel)]="profile.endereco" (click)="showModal()" [readonly]="isReadonly()" ></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Número</ion-label>
-    <ion-input [(ngModel)]="profile.lastName"></ion-input>
+    <ion-input [(ngModel)]="profile.numero"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Complemento</ion-label>
+    <ion-input [(ngModel)]="profile.complemento"></ion-input>
   </ion-item>
 
   <button ion-button clear block (click)="createProfile()">Salvar</button>
