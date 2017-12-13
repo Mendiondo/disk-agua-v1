@@ -19,6 +19,14 @@ export class ProfilePage implements OnInit {
 
   profile = {} as Profile;  
   profileData: FirebaseObjectObservable<Profile>
+  
+  isReadonly() {
+    return true;
+  }
+
+  isAdressSelected() {
+      return this.profile.rua != null;
+  }
 
   address:any = {
     place: '',
@@ -48,13 +56,9 @@ export class ProfilePage implements OnInit {
     })
   }
 
-  isReadonly() {
-    return true;
-  }
-
   ngOnInit() {
     this.initPlacedetails();
-}
+  }
 
 showModal() {
     // reset 
@@ -63,10 +67,10 @@ showModal() {
     let modal = this.modalCtrl.create("AdressSearchPage");
     modal.onDidDismiss(data => {
         console.log('page > modal dismissed > data > ', data);
-        if(data){
-            this.address.place = data.description;
-            // get details
-            this.getPlaceDetail(data.place_id);
+        if(data){                        
+            this.profile.rua = data.terms[0].value
+            this.profile.bairro = data.terms[1].value
+            this.profile.cidade = data.terms[2].value            
         }                
     })
     modal.present();
