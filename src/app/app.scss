@@ -14,14 +14,25 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-.toolbar {           
-    background-image: url('../assets/imgs/sc.png');
-    background-repeat: no-repeat;
-    background-position: top;
-    background-size: contain; 
+// .toolbar {           
+//     background-image: url('../assets/imgs/sc.png');
+//     background-repeat: no-repeat;
+//     background-position: top;
+//     background-size: contain; 
 
-}
-.toolbar-md {
-    padding: 1px;
-    min-height: 105px;
+// }
+// .toolbar-md {
+//     padding: 1px;
+//     min-height: 105px;    
+// }
+$SIDEMENU_TOP: #777cff;
+$SIDEMENU_BOTTOM: #482df3;
+$SIDEMENU_TRANSPARENCY: rgba(215, 213, 231, 0.4);
+
+.toolbar-background-md {
+    background: -webkit-gradient(left top, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background: -o-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background: -moz-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background: linear-gradient(to bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+    background-repeat: repeat-x;
 }

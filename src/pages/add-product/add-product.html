@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-title start>Seu Pedido</ion-title>
+      
+      <ion-buttons end>
+        <button ion-button icon-only color="royal">
+          <ion-icon name="ios-basket-outline"> Comprar</ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+
+<ion-content class="cards-bg">
+
+  <ion-card>
+    <ion-item>
+      <ion-thumbnail>
+        <img src="assets/imgs/pet_500ml_sem_gas.png" item-start/>
+      </ion-thumbnail>
+      <ion-row item-end>
+        <ion-item>
+          <h2>500 ml</h2>
+          <p>Sem gás</p>
+          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
+          <span class="counter">{{currentNumber}}</span>
+          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
+        </ion-item>
+      </ion-row>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <ion-thumbnail>
+        <img src="assets/imgs/pet_500ml_com_gas.png" item-start/>
+      </ion-thumbnail>
+      <ion-row item-end>
+        <ion-item>
+          <h2>500 ml</h2>
+          <p>Com gás</p>
+          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
+          <span class="counter">{{currentNumber1}}</span>
+          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
+        </ion-item>
+      </ion-row>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <ion-thumbnail>
+        <img src="assets/imgs/bombona_20l.png" item-start/>
+      </ion-thumbnail>
+      <ion-row item-end>
+        <ion-item>
+          <h2>Bombona</h2>
+          <p>20L</p>
+          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
+          <span class="counter">{{currentNumber2}}</span>
+          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
+        </ion-item>
+      </ion-row>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <ion-thumbnail>
+        <img src="assets/imgs/bombona_20l.png" item-start/>
+      </ion-thumbnail>
+      <ion-row item-end>
+        <ion-item>
+          <h2>Bombona</h2>
+          <p>20L</p>
+          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
+          <span class="counter">{{currentNumber3}}</span>
+          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
+        </ion-item>
+      </ion-row>
+    </ion-item>
+  </ion-card>
+
+</ion-content>

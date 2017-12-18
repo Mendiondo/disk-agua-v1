@@ -1,0 +1,33 @@
+page-add-product {
+    .cards-bg {
+        ion-item{
+            //background-color: #f5f5f5;;
+            text-align: center;
+        }       
+		ion-card img {			
+		    border-radius: inherit;
+            overflow: hidden;
+            width: 50%;
+            height: auto;
+        }
+        ion-icon {
+            color: blue;
+            font-size: 2.0em;
+            padding: 30px 5px 0px 5px;
+        }        
+    }
+
+    .counter {
+        font-size: 20px;
+        vertical-align: super;
+    }
+    
+    .item-inner {
+        padding-right: 0px;
+    }
+
+    .item-md ion-avatar[item-start]{
+      margin: 8px 0px 8px 0;
+    }
+    
+}

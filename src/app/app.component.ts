@@ -21,7 +21,7 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, afAuth: AngularFireAuth) {
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
-        this.rootPage = 'ProfilePage';
+        this.rootPage = "AddProductPage";
         authObserver.unsubscribe();
       } else {
         this.rootPage = 'LoginPage';
