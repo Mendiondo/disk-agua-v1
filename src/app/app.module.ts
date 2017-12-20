@@ -10,8 +10,6 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
-import { TestPageModule } from '../pages/test/test.module';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { FIREBASE_CONFIG } from './app.firebase.config';
@@ -28,8 +26,7 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    AngularFireDatabaseModule,
-    TestPageModule    
+    AngularFireDatabaseModule    
   ],
   bootstrap: [IonicApp],
   entryComponents: [

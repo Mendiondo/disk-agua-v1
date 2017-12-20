@@ -25,9 +25,9 @@
 //     padding: 1px;
 //     min-height: 105px;    
 // }
-$SIDEMENU_TOP: #777cff;
-$SIDEMENU_BOTTOM: #482df3;
-$SIDEMENU_TRANSPARENCY: rgba(215, 213, 231, 0.4);
+$SIDEMENU_TOP: #707070;
+$SIDEMENU_BOTTOM: #fcfcfc;
+$SIDEMENU_TRANSPARENCY: rgba(192, 190, 204, 0.4);
 
 .toolbar-background-md {
     background: -webkit-gradient(left top, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
@@ -35,4 +35,8 @@ $SIDEMENU_TRANSPARENCY: rgba(215, 213, 231, 0.4);
     background: -moz-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
     background: linear-gradient(to bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
     background-repeat: repeat-x;
+}
+
+.bar-button-default-md {
+    color: blue
 }
