@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { TestPage } from '../test/test';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 import { Profile } from '../../models/profile';
@@ -44,10 +43,5 @@ export class HomePage {
       this.navCtrl.setRoot('LoginPage');
     }).catch((e) => console.error(e));        
   }
-
-  goToTestPage() {
-    this.navCtrl.push(TestPage);
-  }
-
 
 }

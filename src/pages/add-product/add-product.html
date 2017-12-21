@@ -13,14 +13,37 @@
 
 <ion-content class="cards-bg">
 
+  <ion-card *ngFor="let cartItem of cartItems">
+    <ion-grid>
+      <ion-row>
+          <ion-col>
+            <ion-thumbnail>
+              <img src={{cartItem.product.filePath}}} />
+            </ion-thumbnail>          
+        </ion-col>
+        <ion-col text-center>          
+            <h2>500 ml</h2>
+            <p>Sem gás</p>          
+        </ion-col>        
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <ion-card>
     <ion-grid>
       <ion-row>
           <ion-col>
             <ion-thumbnail>
               <img src="assets/imgs/pet_500ml_sem_gas.png" />
-            </ion-thumbnail>
-          
+            </ion-thumbnail>          
         </ion-col>
         <ion-col text-center>          
             <h2>500 ml</h2>
