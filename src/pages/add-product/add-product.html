@@ -1,5 +1,8 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title start>Seu Pedido</ion-title>
 
     <ion-buttons end>
@@ -7,122 +10,28 @@
         <ion-icon name="ios-basket-outline"> Comprar</ion-icon>
       </button>
     </ion-buttons>
-  </ion-toolbar>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content class="cards-bg">
-
-  <ion-card *ngFor="let cartItem of cartItems">
+  <ion-card *ngFor="let product of products$ | async">
     <ion-grid>
       <ion-row>
-          <ion-col>
-            <ion-thumbnail>
-              <img src={{cartItem.product.filePath}}} />
-            </ion-thumbnail>          
+        <ion-col>
+          <ion-thumbnail>
+            <img src="{{product.filePath}}" />
+          </ion-thumbnail>
         </ion-col>
-        <ion-col text-center>          
-            <h2>500 ml</h2>
-            <p>Sem gás</p>          
-        </ion-col>        
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <ion-card>
-    <ion-grid>
-      <ion-row>
-          <ion-col>
-            <ion-thumbnail>
-              <img src="assets/imgs/pet_500ml_sem_gas.png" />
-            </ion-thumbnail>          
+        <ion-col text-center>
+          <h2>{{product.name}}</h2>
+          <p>Sem gás</p>
         </ion-col>
-        <ion-col text-center>          
-            <h2>500 ml</h2>
-            <p>Sem gás</p>          
-        </ion-col>
-        <ion-col text-right>          
-            <h2 text-center color="blue">R$ 5,00</h2>
-            <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
-            <span class="counter">{{currentNumber}}</span>
-            <ion-icon name="add-circle" (click)="increment()"></ion-icon>           
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-  
-  <ion-card>
-    <ion-grid>
-      <ion-row>
-          <ion-col>
-            <ion-thumbnail>
-              <img src="assets/imgs/pet_500ml_sem_gas.png" />
-            </ion-thumbnail>
-          
-        </ion-col>
-        <ion-col text-center>          
-            <h2>Pet 500 ml</h2>
-            <p>Sem gás</p>          
-        </ion-col>
-        <ion-col text-right>          
-            <h2 text-center color="blue">R$ 5,00</h2>
-            <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
-            <span class="counter">{{currentNumber5}}</span>
-            <ion-icon name="add-circle" (click)="increment()"></ion-icon>           
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-  
-  <ion-card>
-    <ion-grid>
-      <ion-row>
-          <ion-col>
-            <ion-thumbnail>
-              <img src="assets/imgs/pet_500ml_sem_gas.png" />
-            </ion-thumbnail>
-          
-        </ion-col>
-        <ion-col text-center>          
-            <h2>Pet 500 ml</h2>
-            <p>Sem gás</p>          
-        </ion-col>
-        <ion-col text-right>          
-            <h2 text-center color="blue">R$ 5,00</h2>
-            <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
-            <span class="counter">{{currentNumber6}}</span>
-            <ion-icon name="add-circle" (click)="increment()"></ion-icon>           
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-  
-  <ion-card>
-    <ion-grid>
-      <ion-row>
-          <ion-col>
-            <ion-thumbnail>
-              <img src="assets/imgs/pet_500ml_sem_gas.png" />
-            </ion-thumbnail>
-          
-        </ion-col>
-        <ion-col text-center>          
-            <h2>Pet 500 ml</h2>
-            <p>Sem gás</p>          
-        </ion-col>
-        <ion-col text-right>          
-            <h2 text-center color="blue">R$ 5,00</h2>
-            <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
-            <span class="counter">{{currentNumber7}}</span>
-            <ion-icon name="add-circle" (click)="increment()"></ion-icon>           
+        <ion-col text-right>
+          <h2 text-center color="blue">R$ {{product.price}}</h2>
+          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
+          <span class="counter">{{currentNumber}}</span>
+          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>

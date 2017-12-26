@@ -1,6 +1,11 @@
 <ion-header>
-  <ion-navbar></ion-navbar>
-</ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Cadastro</ion-title>
+    </ion-navbar>
+  </ion-header>
 
 <ion-content padding>
   <ion-item>
@@ -11,30 +16,32 @@
     <ion-label floating>Email</ion-label>    
     <ion-input [(ngModel)]="profile.email" [readonly]="isReadonly()"></ion-input>
   </ion-item>
-  <ion-item *ngIf="!isAdressSelected()">
-    <ion-label floating>Selecione seu Endereço</ion-label>
-    <ion-input (click)="showModal()" [readonly]="isReadonly()" ></ion-input>
-  </ion-item>
-  <ion-item *ngIf="isAdressSelected()">
-    <ion-label floating>Rua</ion-label>
-    <ion-input [(ngModel)]="profile.rua" [readonly]="isReadonly()" ></ion-input>
-  </ion-item>
-  <ion-item *ngIf="isAdressSelected()">
-    <ion-label floating>Bairro</ion-label>
-    <ion-input [(ngModel)]="profile.bairro" [readonly]="isReadonly()" ></ion-input>
-  </ion-item>
-  <ion-item *ngIf="isAdressSelected()">
-    <ion-label floating>Cidade</ion-label>
-    <ion-input [(ngModel)]="profile.cidade" [readonly]="isReadonly()" ></ion-input>
-  </ion-item>
-  <ion-item *ngIf="isAdressSelected()">
-    <ion-label floating>Número</ion-label>
-    <ion-input [(ngModel)]="profile.numero"></ion-input>
-  </ion-item>
-  <ion-item *ngIf="isAdressSelected()">
-    <ion-label floating>Complemento</ion-label>
-    <ion-input [(ngModel)]="profile.complemento"></ion-input>
-  </ion-item>
+  
+  <ion-card>
+    <ion-card-header (click)="showModal()">
+      Selecionar Endereço
+    </ion-card-header>
+    <ion-item *ngIf="isAdressSelected()">
+      <ion-label floating>Rua</ion-label>
+      <ion-input [(ngModel)]="profile.rua" [readonly]="isReadonly()" ></ion-input>
+    </ion-item>
+    <ion-item *ngIf="isAdressSelected()">
+      <ion-label floating>Bairro</ion-label>
+      <ion-input [(ngModel)]="profile.bairro" [readonly]="isReadonly()" ></ion-input>
+    </ion-item>
+    <ion-item *ngIf="isAdressSelected()">
+      <ion-label floating>Cidade</ion-label>
+      <ion-input [(ngModel)]="profile.cidade" [readonly]="isReadonly()" ></ion-input>
+    </ion-item>
+    <ion-item *ngIf="isAdressSelected()">
+      <ion-label floating>Número</ion-label>
+      <ion-input [(ngModel)]="profile.numero"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="isAdressSelected()">
+      <ion-label floating>Complemento</ion-label>
+      <ion-input [(ngModel)]="profile.complemento"></ion-input>
+    </ion-item>
+  </ion-card>
 
   <button ion-button clear block (click)="createProfile()">Salvar</button>
 </ion-content>

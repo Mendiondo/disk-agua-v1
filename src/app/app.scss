@@ -19,22 +19,22 @@
 //     background-repeat: no-repeat;
 //     background-position: top;
 //     background-size: contain; 
-
 // }
 // .toolbar-md {
 //     padding: 1px;
 //     min-height: 105px;    
 // }
-$SIDEMENU_TOP: rgb(50, 50, 158);
-$SIDEMENU_BOTTOM: blue;
-$SIDEMENU_TRANSPARENCY: white;
+// $SIDEMENU_TOP: rgb(50, 50, 158);
+// $SIDEMENU_BOTTOM: blue;
+// $SIDEMENU_TRANSPARENCY: white;
 
 .toolbar-background-md {
-    background: -webkit-gradient(left top, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
-    background: -o-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
-    background: -moz-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
-    background: linear-gradient(to bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
-    background-repeat: repeat-x;
+//     background: -webkit-gradient(left top, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+//     background: -o-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+//     background: -moz-linear-gradient(bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+//     background: linear-gradient(to bottom right, $SIDEMENU_TOP, $SIDEMENU_BOTTOM);
+//     background-repeat: repeat-x;
+    background-color: #FF6600;
 }
 
 .bar-button-default-md {

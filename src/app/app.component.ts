@@ -20,7 +20,9 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, afAuth: AngularFireAuth) {
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
-        this.rootPage = "AddProductPage";
+        this.rootPage = ListPage;
+        // this.rootPage = "DistributorPage";
+        // this.rootPage = "AddProductPage";
         authObserver.unsubscribe();
       } else {
         this.rootPage = 'LoginPage';
@@ -32,7 +34,9 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [      
-      { title: 'List', component: ListPage }      
+      { title: 'List', component: ListPage }, 
+      { title: 'Cadastro', component: "ProfilePage" },
+      { title: 'Comprar', component: "AddProductPage" }
     ];
 
   }

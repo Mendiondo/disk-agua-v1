@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the DistributorPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Product } from '../../models/product';
+import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -15,11 +12,23 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class DistributorPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  product = {} as Product
+
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private afDatabase: AngularFireDatabase,
+    private auth: AngularFireAuth) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DistributorPage');
+  }
+
+  save() {
+    this.auth.authState.take(1).subscribe(auth => {
+      this.afDatabase.object(`produto/${this.product.clientId}`).set(this.product)
+      .then(() => this.navCtrl.setRoot(HomePage))
+    })
   }
 
 }

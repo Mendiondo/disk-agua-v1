@@ -9,7 +9,20 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-label floating>Nome Completo</ion-label>
-    <ion-input [(ngModel)]="profile.nomeCompleto"></ion-input>
+    <ion-label floating>Path</ion-label>
+    <ion-input [(ngModel)]="product.filePath"></ion-input>
   </ion-item>
-  </ion-content>
+  <ion-item>
+    <ion-label floating>Name</ion-label>
+    <ion-input [(ngModel)]="product.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Price</ion-label>
+    <ion-input [(ngModel)]="product.price" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Client ID</ion-label>
+    <ion-input [(ngModel)]="product.clientId"></ion-input>
+  </ion-item>
+  <button ion-button clear block (click)="save()">Salvar</button>
+</ion-content>
