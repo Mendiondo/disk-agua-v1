@@ -33,15 +33,15 @@
       <ion-label floating>Cidade</ion-label>
       <ion-input [(ngModel)]="profile.cidade" [readonly]="isReadonly()" ></ion-input>
     </ion-item>
-    <ion-item *ngIf="isAdressSelected()">
-      <ion-label floating>Número</ion-label>
-      <ion-input [(ngModel)]="profile.numero"></ion-input>
-    </ion-item>
-    <ion-item *ngIf="isAdressSelected()">
-      <ion-label floating>Complemento</ion-label>
-      <ion-input [(ngModel)]="profile.complemento"></ion-input>
-    </ion-item>
   </ion-card>
+  <ion-item *ngIf="isAdressSelected()">
+    <ion-label floating>Número</ion-label>
+    <ion-input [(ngModel)]="profile.numero"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="isAdressSelected()">
+    <ion-label floating>Complemento</ion-label>
+    <ion-input [(ngModel)]="profile.complemento"></ion-input>
+  </ion-item>
 
   <button ion-button clear block (click)="createProfile()">Salvar</button>
 </ion-content>
