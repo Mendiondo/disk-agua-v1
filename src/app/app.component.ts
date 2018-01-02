@@ -19,10 +19,8 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, afAuth: AngularFireAuth) {
     const authObserver = afAuth.authState.subscribe( user => {
-      if (user) {
-        this.rootPage = ListPage;
-        // this.rootPage = "DistributorPage";
-        // this.rootPage = "AddProductPage";
+      if (user) {                
+        this.rootPage = "AddProductPage";
         authObserver.unsubscribe();
       } else {
         this.rootPage = 'LoginPage';
@@ -35,7 +33,9 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [      
       { title: 'List', component: ListPage }, 
+      { title: 'Home', component: HomePage }, 
       { title: 'Cadastro', component: "ProfilePage" },
+      { title: 'Produtos', component: "DistributorPage" },
       { title: 'Comprar', component: "AddProductPage" }
     ];
 
@@ -45,7 +45,9 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+    //  this.statusBar.styleDefault();
+      //this.statusBar.overlaysWebView(true);
+      this.statusBar.backgroundColorByHexString('#FF6600');
       this.splashScreen.hide();
     });
   }

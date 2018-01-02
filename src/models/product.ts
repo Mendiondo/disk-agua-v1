@@ -3,4 +3,6 @@ export interface Product {
     name: string;
     price: number;
     clientId: string;
+    quantidade: number;
+    subTotal: number;
 }

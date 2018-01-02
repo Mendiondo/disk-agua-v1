@@ -25,67 +25,16 @@
         </ion-col>
         <ion-col text-center>
           <h2>{{product.name}}</h2>
-          <p>Sem gás</p>
+          <h2 class="price" >{{product.price | currency:'BRL':true:'1.2-2'}} un.</h2>
         </ion-col>
         <ion-col text-right>
-          <h2 text-center color="blue">R$ {{product.price}}</h2>
-          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
-          <span class="counter">{{currentNumber}}</span>
-          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
+          <h2 text-center color="blue" >{{product.subTotal | currency:'BRL':true:'1.2-2'}}</h2>
+          <!-- *ngIf="product.subTotal != 0" -->
+          <ion-icon name="remove-circle" (click)="decrement(product)" color></ion-icon>
+          <span class="counter">{{product.quantidade}}</span>
+          <ion-icon name="add-circle" (click)="increment(product)"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-thumbnail>
-        <img src="assets/imgs/pet_500ml_com_gas.png" item-start/>
-      </ion-thumbnail>
-      <ion-row item-end>
-        <ion-item>
-          <h2>500 ml</h2>
-          <p>Com gás</p>
-          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
-          <span class="counter">{{currentNumber1}}</span>
-          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
-        </ion-item>
-      </ion-row>
-    </ion-item>
-  </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-thumbnail>
-        <img src="assets/imgs/bombona_20l.png" item-start/>
-      </ion-thumbnail>
-      <ion-row item-end>
-        <ion-item>
-          <h2>Bombona</h2>
-          <p>20L</p>
-          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
-          <span class="counter">{{currentNumber2}}</span>
-          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
-        </ion-item>
-      </ion-row>
-    </ion-item>
-  </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-thumbnail>
-        <img src="assets/imgs/bombona_20l.png" item-start/>
-      </ion-thumbnail>
-      <ion-row item-end>
-        <ion-item>
-          <h2>Bombona</h2>
-          <p>20L</p>
-          <ion-icon name="remove-circle" (click)="decrement()" color></ion-icon>
-          <span class="counter">{{currentNumber3}}</span>
-          <ion-icon name="add-circle" (click)="increment()"></ion-icon>
-        </ion-item>
-      </ion-row>
-    </ion-item>
-  </ion-card>
-
 </ion-content>

@@ -1,28 +1,30 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>distributor</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Distributor</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <ion-item>
+  <!-- <ion-item>
     <ion-label floating>Path</ion-label>
     <ion-input [(ngModel)]="product.filePath"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Name</ion-label>
     <ion-input [(ngModel)]="product.name"></ion-input>
-  </ion-item>
+  </ion-item> -->  
+  <ion-item>
+    <ion-label>Produto</ion-label>
+    <ion-select [(ngModel)]="selectedValue" interface="action-sheet" (ionChange)="selectProduct()" class="product-select"> 
+      <ion-option *ngFor="let product of products$ | async" [value]="product">{{product.name}}</ion-option>  
+    </ion-select>
+  </ion-item>  
   <ion-item>
     <ion-label floating>Price</ion-label>
-    <ion-input [(ngModel)]="product.price" type="number"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Client ID</ion-label>
-    <ion-input [(ngModel)]="product.clientId"></ion-input>
+    <ion-input [(ngModel)]="product.price" type="number" pattern="[0-9]*"></ion-input>
   </ion-item>
   <button ion-button clear block (click)="save()">Salvar</button>
 </ion-content>
