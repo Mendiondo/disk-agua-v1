@@ -23,7 +23,7 @@ export class AddProductPage {
   
   ionViewDidLoad() {
     this.auth.authState.take(1).subscribe(auth => {      
-      this.products$ = this.afDatabase.list(`produto/${auth.uid}`
+      this.products$ = this.afDatabase.list(`produtoCliente/${auth.uid}`
       /* , {
         query: {
           orderByChild: 'price',
@@ -31,7 +31,7 @@ export class AddProductPage {
         }
       } */
       );      
-      this.products$.subscribe(x => console.log(x));
+      this.products$.take(1).subscribe(x => console.log(x));
     })
 
   }

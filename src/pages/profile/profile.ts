@@ -7,6 +7,7 @@ import { HomePage } from '../home/home';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { AdressSearchPage } from '../adress-search/adress-search';
+import 'rxjs/add/operator/take';
 
 declare var google: any;
 
@@ -46,7 +47,7 @@ export class ProfilePage implements OnInit {
     }
 
     ionViewWillLoad() {
-        this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).subscribe(prof => {
+        this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).take(1).subscribe(prof => {
             if (prof.email) {
                 this.profile = prof;
                 console.log("1  " + prof);

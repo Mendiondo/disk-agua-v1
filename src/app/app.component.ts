@@ -17,14 +17,14 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, afAuth: AngularFireAuth) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public afAuth: AngularFireAuth) {
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {                
         this.rootPage = "AddProductPage";
-        authObserver.unsubscribe();
+        authObserver.unsubscribe();        
       } else {
         this.rootPage = 'LoginPage';
-        authObserver.unsubscribe();
+        authObserver.unsubscribe();        
       }
     });
 
@@ -32,8 +32,8 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [      
-      { title: 'List', component: ListPage }, 
-      { title: 'Home', component: HomePage }, 
+      // { title: 'List', component: ListPage }, 
+      // { title: 'Home', component: HomePage }, 
       { title: 'Cadastro', component: "ProfilePage" },
       { title: 'Produtos', component: "DistributorPage" },
       { title: 'Comprar', component: "AddProductPage" }
@@ -45,7 +45,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-    //  this.statusBar.styleDefault();
+      //this.statusBar.styleDefault();
       //this.statusBar.overlaysWebView(true);
       this.statusBar.backgroundColorByHexString('#FF6600');
       this.splashScreen.hide();
@@ -56,5 +56,11 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  logout() {    
+    this.afAuth.auth.signOut().then(auth => {
+      this.nav.setRoot('LoginPage');
+    }).catch((e) => console.error(e));
   }
 }

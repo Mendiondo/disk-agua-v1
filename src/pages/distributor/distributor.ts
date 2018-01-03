@@ -23,21 +23,19 @@ export class DistributorPage {
   }
 
   ionViewDidLoad() {    
-    this.auth.authState.take(1).subscribe(auth => {      
-      this.products$ = this.afDatabase.list(`produto/${auth.uid}`);      
-      this.products$.subscribe(x => console.log(x));
+    this.auth.authState.take(1).subscribe(auth => {
+      this.products$ = this.afDatabase.list(`produtoCliente/${auth.uid}`);      
+      this.products$.take(1).subscribe(x => { 
+         this.afDatabase.list(`produto`).take(1).subscribe(y => x.concat(y));
+      });
     });    
   }
 
-  save() {
-    // this.product.filePath="assets/imgs/bombona_20l.png";
-    // this.product.name = "Bombona 20L";
-    // this.product.quantidade = 0;
-    // this.product.subTotal = 0;
+  save() {    
     this.auth.authState.take(1).subscribe(auth => {
       this.product.clientId = auth.uid;
-      this.afDatabase.object(`produto/${auth.uid}/${this.product.name}`).set(this.product)
-      .then(() => this.navCtrl.setRoot("AddProductPage"))
+      this.afDatabase.object(`produtoCliente/${auth.uid}/${this.product.name}`).set(this.product)
+      .then(() => this.navCtrl.setRoot("DistributorPage"))
     })
   }
 

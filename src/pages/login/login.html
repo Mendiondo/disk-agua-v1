@@ -1,5 +1,6 @@
 <ion-header >
   <ion-navbar>    
+    <ion-title start>Disk Água Santa Catarina</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -14,15 +15,15 @@
     <ion-input type="password" [(ngModel)]="user.password"></ion-input>
   </ion-item>
   <div text-center>
-    <button ion-button (click)="login(user)" >login</button>  
-    <button ion-button color="light" (click)="register()" >register</button>
+    <button ion-button color="secondary" (click)="login(user)" >login</button>  
+    <button ion-button color="danger" (click)="register()" >register</button>
  </div>
 
   <button ion-button block color="danger" (click)="loginWithGoogle()" >
     <ion-icon></ion-icon>    
     Login with Google
   </button>
-  <button ion-button block color="primary" (click)="loginWithFacebook()" >
+  <button ion-button block color="secondary" (click)="loginWithFacebook()" >
     <ion-icon></ion-icon>    
     Login with Facebook
   </button>

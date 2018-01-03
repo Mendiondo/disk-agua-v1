@@ -3,6 +3,7 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 import { Profile } from '../../models/profile';
+import { ListPage } from '../list/list';
 
 @Component({
   selector: 'page-home',
@@ -38,9 +39,10 @@ export class HomePage {
     })
   }
 
-  logout() {
+  logout() {    
     this.auth.auth.signOut().then(auth => {
-      this.navCtrl.setRoot('LoginPage');
+       this.navCtrl.setRoot('LoginPage');
+      //this.navCtrl.setRoot(ListPage);
     }).catch((e) => console.error(e));        
   }
 
