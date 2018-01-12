@@ -8,14 +8,6 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- <ion-item>
-    <ion-label floating>Path</ion-label>
-    <ion-input [(ngModel)]="product.filePath"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Name</ion-label>
-    <ion-input [(ngModel)]="product.name"></ion-input>
-  </ion-item> -->  
   <ion-item>
     <ion-label>Produto</ion-label>
     <ion-select [(ngModel)]="selectedValue" interface="action-sheet" (ionChange)="selectProduct()" class="product-select"> 
@@ -24,7 +16,7 @@
   </ion-item>  
   <ion-item>
     <ion-label floating>Price</ion-label>
-    <ion-input [(ngModel)]="product.price" type="number" pattern="[0-9]*"></ion-input>
+    <ion-input [(ngModel)]="product.price" name="price" type="number" pattern="[0-9]*"></ion-input>
   </ion-item>
-  <button ion-button clear block (click)="save()">Salvar</button>
+  <button ion-button clear block (click)="save()" [disabled]="false">Salvar</button>
 </ion-content>

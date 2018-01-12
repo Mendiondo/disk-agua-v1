@@ -5,4 +5,5 @@ export interface Product {
     clientId: string;
     quantidade: number;
     subTotal: number;
+    order: number;
 }

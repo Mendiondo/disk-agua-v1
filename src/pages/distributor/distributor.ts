@@ -24,14 +24,19 @@ export class DistributorPage {
 
   ionViewDidLoad() {    
     this.auth.authState.take(1).subscribe(auth => {
-      this.products$ = this.afDatabase.list(`produtoCliente/${auth.uid}`);      
+      this.products$ = this.afDatabase.list(`produtoCliente/${auth.uid}`);
       this.products$.take(1).subscribe(x => { 
          this.afDatabase.list(`produto`).take(1).subscribe(y => x.concat(y));
       });
     });    
   }
 
-  save() {    
+  save() {
+    // if (this.product != null && this.product.price.toString() != '') {
+    //   console.log('OK');
+    // } else {
+    //   console.log('Wrong');
+    // }
     this.auth.authState.take(1).subscribe(auth => {
       this.product.clientId = auth.uid;
       this.afDatabase.object(`produtoCliente/${auth.uid}/${this.product.name}`).set(this.product)

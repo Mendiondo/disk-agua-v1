@@ -13,6 +13,7 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { BasketServiceProvider } from '../providers/basket-service/basket-service';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
     SplashScreen,
     GooglePlus,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {provide: LOCALE_ID, useValue: 'pt-BR'}
+    {provide: LOCALE_ID, useValue: 'pt-BR'},
+    BasketServiceProvider
   ]
 })
 export class AppModule {}

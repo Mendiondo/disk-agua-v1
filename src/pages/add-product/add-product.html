@@ -6,7 +6,7 @@
     <ion-title start>Seu Pedido</ion-title>
 
     <ion-buttons end>
-      <button ion-button>
+      <button ion-button (click)="comprar()">
         <ion-icon name="ios-basket-outline"> Comprar</ion-icon>
       </button>
     </ion-buttons>
@@ -25,10 +25,10 @@
         </ion-col>
         <ion-col text-center>
           <h2>{{product.name}}</h2>
-          <h2 class="price" >{{product.price | currency:'BRL':true:'1.2-2'}} un.</h2>
+          <h2 class="price" >{{product.price | currency:'BRL':true}} un.</h2>
         </ion-col>
         <ion-col text-right>
-          <h2 text-center color="blue" >{{product.subTotal | currency:'BRL':true:'1.2-2'}}</h2>
+          <h2 text-center color="blue" >{{product.subTotal | currency:'BRL':true}}</h2>
           <!-- *ngIf="product.subTotal != 0" -->
           <ion-icon name="remove-circle" (click)="decrement(product)" color></ion-icon>
           <span class="counter">{{product.quantidade}}</span>
