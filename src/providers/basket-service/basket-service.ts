@@ -12,8 +12,14 @@ export class BasketServiceProvider {
     this.products = new Array();
   }
 
-  addProduct(product: Product) {    
-    this.products.push(product);    
+  addProduct(product: Product) {
+    const index = this.products.indexOf(product);    
+    console.log(index);
+    if (index == -1) {
+      this.products.push(product);
+    } else {
+      this.products[index] = product;
+    }
   }
   
   removeProduct(product: Product) {        

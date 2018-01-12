@@ -11,6 +11,7 @@ import { Product } from '../../models/product';
 })
 export class BasketPage {
   products: Product[];
+  total: number;
 
   constructor(
     public navCtrl: NavController, 
@@ -20,7 +21,15 @@ export class BasketPage {
 
   ionViewDidLoad() {
     this.products = this.basketService.getProducts();
+    this.total = this.basketService.getProducts()
+    .map(product => product.price)
+    .reduce((total,price) => total + price, 0)
+    
+    // .subscribe(totalPrice => this.total = totalPrice) 
+
     console.log('ionViewDidLoad BasketPage');
+
+    // .reduce( (total,price) => total + price, 0)
   }
 
 }

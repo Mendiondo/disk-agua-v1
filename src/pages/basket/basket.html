@@ -8,6 +8,23 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-item *ngFor="let product of products">{{product.name}}</ion-item>
+<ion-content padding>  
+  <ion-grid>
+    <ion-row>
+      <ion-col col-8>Produto</ion-col>
+      <ion-col col-2>Preço</ion-col>      
+    </ion-row>    
+    <ion-row *ngFor="let product of products">
+      <ion-col col-8>
+        {{product.name}}
+      </ion-col>
+      <ion-col col-4>
+        {{product.quantidade}}x - {{product.price | currency:'BRL':true}}
+      </ion-col>      
+    </ion-row>
+    <ion-row>
+      <ion-col col-8>Total</ion-col>      
+      <ion-col col-4>{{total}}</ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
