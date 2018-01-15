@@ -16,26 +16,41 @@ import { BasketServiceProvider } from '../../providers/basket-service/basket-ser
 })
 export class AddProductPage {
   products$: FirebaseListObservable<Product[]>
-  //products: Product[] = new Array();
-  
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
+  products: Product[];
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     private afDatabase: AngularFireDatabase,
     private auth: AngularFireAuth,
     public basketService: BasketServiceProvider) {
   }
-  
+
   ionViewDidLoad() {
-    this.auth.authState.take(1).subscribe(auth => {      
-      this.products$ = this.afDatabase.list(`produtoCliente/${auth.uid}`
-       , {
-        query: {
-          orderByChild: 'order'
+    let productLs = this.basketService.getProducts();
+    console.log(productLs);
+    console.log(productLs.length);
+    if (productLs.length == 0) {
+      this.auth.authState.take(1).subscribe(auth => {
+        this.products$ = this.afDatabase.list(`produtoCliente/${auth.uid}`, {
+          query: {
+            orderByChild: 'order'
+          }
         }
-      } 
-      );      
-      this.products$.take(1).subscribe(x => console.log(x));
-    });
+        );
+        console.log("1.5");
+        console.log(this.products$);
+        this.products$.forEach(product => {
+          this.products = product;
+          this.basketService.setProducts(product);    
+          console.log("2");      
+          console.log(this.products);      
+        });
+        this.products$.take(1).subscribe(x => console.log(x))
+      });
+    } else {
+      this.products = productLs;
+      console.log("3" + this.products);
+    }
     // this.auth.authState.take(1).subscribe(auth => {      
     //   var ref = firebase.database().ref(`produtoCliente/${auth.uid}`).or;
     //   ref.on("value", function(snapshot) {
@@ -48,28 +63,20 @@ export class AddProductPage {
 
   }
 
-  increment(product: Product) {
-    product.quantidade = product.quantidade + 1;
-    product.subTotal = this.getSubTotal(product);
-    this.basketService.addProduct(product);
-    // this.products.push(product);
-    // console.log(this.products);
+  increment(product: Product) {    
+    this.basketService.addProduct(product);    
   }
-  
+
   decrement(product: Product) {    
-    product.quantidade = product.quantidade == 0 ? 0 : product.quantidade - 1;    
-    product.subTotal = this.getSubTotal(product);
     this.basketService.removeProduct(product);
-    // const index = this.products.indexOf(product);
-    // this.products.splice(index, 1);
-    // console.log(this.products);
+
   }
-  
+
   getSubTotal(product: Product) {
     return product.quantidade == 0 ? 0 : product.price * product.quantidade;
   }
 
-  comprar() {
+  comprar() {    
     this.navCtrl.setRoot("BasketPage");
   }
 

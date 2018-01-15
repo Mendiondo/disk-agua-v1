@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+    <button ion-button (click)="goBack()">
+      <ion-icon name="arrow-back"></ion-icon>
     </button>
     <ion-title>Carrinho</ion-title>
   </ion-navbar>
@@ -23,8 +23,8 @@
       </ion-col>      
     </ion-row>
     <ion-row>
-      <ion-col col-8>Total</ion-col>      
-      <ion-col col-4>{{total}}</ion-col>
+      <ion-col col-8>Total</ion-col>
+      <ion-col col-4>{{total | currency:'BRL':true}}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

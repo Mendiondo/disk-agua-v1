@@ -22,14 +22,18 @@ export class BasketPage {
   ionViewDidLoad() {
     this.products = this.basketService.getProducts();
     this.total = this.basketService.getProducts()
-    .map(product => product.price)
-    .reduce((total,price) => total + price, 0)
+    .map(product => product.subTotal)
+    .reduce((total,subTotal) => total + subTotal, 0)
     
     // .subscribe(totalPrice => this.total = totalPrice) 
 
     console.log('ionViewDidLoad BasketPage');
 
     // .reduce( (total,price) => total + price, 0)
+  }
+
+  goBack() {
+    this.navCtrl.setRoot("AddProductPage");
   }
 
 }
