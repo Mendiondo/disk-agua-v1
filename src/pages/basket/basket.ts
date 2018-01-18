@@ -20,8 +20,10 @@ export class BasketPage {
   }
 
   ionViewDidLoad() {
-    this.products = this.basketService.getProducts();
-    this.total = this.basketService.getProducts()
+    this.products = this.basketService.getProducts()
+    .filter(product => product.quantidade > 0);
+
+    this.total = this.products    
     .map(product => product.subTotal)
     .reduce((total,subTotal) => total + subTotal, 0)
     

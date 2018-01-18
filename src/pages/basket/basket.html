@@ -19,7 +19,7 @@
         {{product.name}}
       </ion-col>
       <ion-col col-4>
-        {{product.quantidade}}x - {{product.price | currency:'BRL':true}}
+        <p>{{product.quantidade}}x - {{product.price | currency:'BRL':true}}</p>
       </ion-col>      
     </ion-row>
     <ion-row>
@@ -27,4 +27,10 @@
       <ion-col col-4>{{total | currency:'BRL':true}}</ion-col>
     </ion-row>
   </ion-grid>
+  <!-- <ion-list>
+    <ion-item *ngFor="let product of products">      
+      <span>{{product.name}}</span>
+      <span>{{product.quantidade}}x - {{product.price | currency:'BRL':true}}</span>
+    </ion-item>
+  </ion-list> -->
 </ion-content>
