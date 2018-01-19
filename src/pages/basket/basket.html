@@ -1,15 +1,20 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button (click)="goBack()">
+    <!--  <button ion-button (click)="goBack()">
       <ion-icon name="arrow-back"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>Carrinho</ion-title>
   </ion-navbar>
+  <!-- <ion-buttons left>
+      <button ion-button icon-only (click)="goBack()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+  </ion-buttons> -->
 </ion-header>
 
 
-<ion-content padding>  
-  <ion-grid>
+<ion-content padding>
+  <!-- <ion-grid>
     <ion-row>
       <ion-col col-8>Produto</ion-col>
       <ion-col col-2>Preço</ion-col>      
@@ -26,11 +31,37 @@
       <ion-col col-8>Total</ion-col>
       <ion-col col-4>{{total | currency:'BRL':true}}</ion-col>
     </ion-row>
-  </ion-grid>
-  <!-- <ion-list>
-    <ion-item *ngFor="let product of products">      
-      <span>{{product.name}}</span>
-      <span>{{product.quantidade}}x - {{product.price | currency:'BRL':true}}</span>
+  </ion-grid> -->
+  <ion-list>
+    <ion-item *ngFor="let product of products">
+      <h2 class="itemLeft">{{product.name}}</h2>
+      <h2 class="itemRight">{{product.quantidade}}x - {{product.price | currency:'BRL':true}}</h2>
     </ion-item>
-  </ion-list> -->
+    <ion-item class="itemTotal">
+      <h2 class="itemLeft">Total</h2>
+      <h2 class="itemRight">{{total | currency:'BRL':true}}</h2>
+    </ion-item>
+  </ion-list>
+
+  <ion-list radio-group class="payment">
+    <ion-list-header>
+      Forma de Pagamento
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Cartão</ion-label>
+      <ion-radio value="cartao"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Dinheiro</ion-label>
+      <ion-radio value="dinheiro"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+      <ion-label color="primary" floating>Troco para</ion-label>
+      <ion-input name="payment" type="number" pattern="[0-9]*"></ion-input>
+  </ion-item>
+
 </ion-content>

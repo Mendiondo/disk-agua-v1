@@ -35,7 +35,7 @@ export class BasketPage {
   }
 
   goBack() {
-    this.navCtrl.setRoot("AddProductPage");
+    this.navCtrl.pop();
   }
 
 }

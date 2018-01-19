@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Product } from '../../models/product';
-import { CartItem } from '../../models/cartItem';
 import { Cart } from '../../models/cart';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -77,7 +76,7 @@ export class AddProductPage {
   }
 
   comprar() {    
-    this.navCtrl.setRoot("BasketPage");
+    this.navCtrl.push("BasketPage");
   }
 
 }
