@@ -37,6 +37,13 @@ export class DistributorPage {
     // } else {
     //   console.log('Wrong');
     // }
+    // this.product.name = "Pet 10L";
+    // this.product.clientId = "wudBdsFUMNcTmKZzFE4PAtx3S4S2";
+    // this.product.filePath = "assets/imgs/pet_10l.png";
+    // this.product.order = 8;
+    // this.product.price = 8.10;
+    // this.product.quantidade = 0;
+    // this.product.subTotal = 0;
     this.auth.authState.take(1).subscribe(auth => {
       this.product.clientId = auth.uid;
       this.afDatabase.object(`produtoCliente/${auth.uid}/${this.product.name}`).set(this.product)
