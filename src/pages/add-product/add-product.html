@@ -20,16 +20,16 @@
       <ion-row>
         <ion-col>
           <ion-thumbnail>
-            <img src="{{product.filePath}}" />
+            <img class="logo" src="{{product.filePath}}" />
           </ion-thumbnail>
         </ion-col>
         <ion-col text-center>
           <h2>{{product.name}}</h2>
           <h2 class="price" >{{product.price | currency:'BRL':true}} un.</h2>
+          <img *ngIf="product.isGlass" class="recy" src="../assets/imgs/recycle.png" />
         </ion-col>
         <ion-col text-right>
-          <h2 text-center color="blue" >{{product.subTotal | currency:'BRL':true}}</h2>
-          <!-- *ngIf="product.subTotal != 0" -->
+          <h2 text-center color="blue" >{{product.subTotal | currency:'BRL':true}}</h2>          
           <ion-icon name="remove-circle" (click)="decrement(product)" color></ion-icon>
           <span class="counter">{{product.quantidade}}</span>
           <ion-icon name="add-circle" (click)="increment(product)"></ion-icon>

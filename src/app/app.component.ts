@@ -18,16 +18,6 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public afAuth: AngularFireAuth) {
-    const authObserver = afAuth.authState.subscribe( user => {
-      if (user) {                
-        this.rootPage = "AddProductPage";
-        authObserver.unsubscribe();        
-      } else {
-        this.rootPage = 'LoginPage';
-        authObserver.unsubscribe();        
-      }
-    });
-
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -47,6 +37,26 @@ export class MyApp {
       //this.statusBar.overlaysWebView(true);
       this.statusBar.backgroundColorByHexString('#FF6600');
       this.splashScreen.hide();
+      this.login();
+      
+    });
+  }
+
+  login() {
+    const authObserver = this.afAuth.authState.subscribe( user => {
+      if (user) {
+        if(this.platform.is('cordova')) {
+          console.log("Cordova");
+          this.rootPage = "AddProductPage";
+        } else {
+          console.log("Not Cordova");
+          this.rootPage = "DistributorPage";
+        }                
+        authObserver.unsubscribe();        
+      } else {
+        this.rootPage = 'LoginPage';
+        authObserver.unsubscribe();        
+      }
     });
   }
 

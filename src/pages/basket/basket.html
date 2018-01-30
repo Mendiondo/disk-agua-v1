@@ -1,37 +1,11 @@
 <ion-header>
-  <ion-navbar>
-    <!--  <button ion-button (click)="goBack()">
-      <ion-icon name="arrow-back"></ion-icon>
-    </button> -->
+  <ion-navbar>    
     <ion-title>Carrinho</ion-title>
   </ion-navbar>
-  <!-- <ion-buttons left>
-      <button ion-button icon-only (click)="goBack()">
-          <ion-icon name="arrow-back"></ion-icon>
-      </button>
-  </ion-buttons> -->
 </ion-header>
 
 
-<ion-content padding>
-  <!-- <ion-grid>
-    <ion-row>
-      <ion-col col-8>Produto</ion-col>
-      <ion-col col-2>Preço</ion-col>      
-    </ion-row>    
-    <ion-row *ngFor="let product of products">
-      <ion-col col-8>
-        {{product.name}}
-      </ion-col>
-      <ion-col col-4>
-        <p>{{product.quantidade}}x - {{product.price | currency:'BRL':true}}</p>
-      </ion-col>      
-    </ion-row>
-    <ion-row>
-      <ion-col col-8>Total</ion-col>
-      <ion-col col-4>{{total | currency:'BRL':true}}</ion-col>
-    </ion-row>
-  </ion-grid> -->
+<ion-content padding>  
   <ion-list>
     <ion-item *ngFor="let product of products">
       <h2 class="itemLeft">{{product.name}}</h2>

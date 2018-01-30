@@ -1,14 +1,19 @@
 page-add-product {
     .cards-bg {
+        background-image: url('../assets/imgs/fundo_body.png');            
+
         ion-item{
-            //background-color: #f5f5f5;;
             text-align: center;
         }       
-		ion-card img {			
+		.logo {			
 		    border-radius: inherit;
             overflow: hidden;
             width: 70%;
             height: auto;            
+        }
+        .recy {
+            //width: 30%;
+            //margin-left: 25%;
         }
         ion-icon {
             color: #FF6600;
@@ -16,8 +21,8 @@ page-add-product {
             padding: 30px 5px 0px 5px;
         }                
     }
-    .card-md {
-        background-image: url('../assets/imgs/card_background.png');
+    .card-md {                
+        //background-color: #f9f9f9;
     }
     .counter {
         font-size: 20px;

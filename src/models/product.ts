@@ -6,4 +6,5 @@ export interface Product {
     quantidade: number;
     subTotal: number;
     order: number;
+    isGlass: boolean;
 }
