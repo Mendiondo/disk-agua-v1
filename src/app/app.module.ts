@@ -3,7 +3,8 @@ import { ErrorHandler, NgModule, LOCALE_ID } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from 'angularfire2'
 import { AngularFireAuthModule } from 'angularfire2/auth'
-import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated'
+// import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated'
+import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { GooglePlus } from '@ionic-native/google-plus';
 
 import { MyApp } from './app.component';
