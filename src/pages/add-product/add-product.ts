@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Product } from '../../models/product';
 import { Cart } from '../../models/cart';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { updateDate } from 'ionic-angular/util/datetime-util';
 import * as firebase from 'firebase/app';
 import { BasketServiceProvider } from '../../providers/basket-service/basket-service';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -14,7 +15,8 @@ import { BasketServiceProvider } from '../../providers/basket-service/basket-ser
   templateUrl: 'add-product.html',
 })
 export class AddProductPage {
-  products$: FirebaseListObservable<Product[]>
+  // products$: FirebaseListObservable<Product[]>
+  products$: Observable<Product[]>
   products: Product[];
 
   constructor(public navCtrl: NavController,
@@ -25,41 +27,28 @@ export class AddProductPage {
   }
 
   ionViewDidLoad() {
-    let productLs = this.basketService.getProducts();
-    console.log(productLs);
-    console.log(productLs.length);
+    let productLs = this.basketService.getProducts();    
     if (productLs.length == 0) {
-      this.auth.authState.take(1).subscribe(auth => {
-        this.products$ = this.afDatabase.list(`produtoCliente/${auth.uid}`, {
-          query: {
-            orderByChild: 'order'
+      this.auth.authState.take(1).subscribe(auth => {                
+        this.products$ = this.afDatabase
+        .list<Product>(`produtoCliente/${auth.uid}`, products => products.orderByChild('order'))
+        .snapshotChanges()      
+        .map(
+          changes => {
+            return changes.map( c => ({
+              key: c.payload.key, ...c.payload.val()
+            }))
           }
-        }
-        );
-        console.log("1.5");
-        console.log(this.products$);
+        );        
         this.products$.forEach(product => {
           this.products = product;
-          this.basketService.setProducts(product);    
-          console.log("2");      
-          console.log(this.products);      
+          this.basketService.setProducts(product);          
         });
         this.products$.take(1).subscribe(x => console.log(x))
       });
     } else {
       this.products = productLs;
-      console.log("3" + this.products);
     }
-    // this.auth.authState.take(1).subscribe(auth => {      
-    //   var ref = firebase.database().ref(`produtoCliente/${auth.uid}`).or;
-    //   ref.on("value", function(snapshot) {
-    //     this.producs = snapshot.val();
-    //     console.log(this.producs);
-    //   }, function (errorObject) {
-    //     console.log("The read failed: " + errorObject.code);
-    //   });
-    // });
-
   }
 
   increment(product: Product) {    
@@ -68,7 +57,6 @@ export class AddProductPage {
 
   decrement(product: Product) {    
     this.basketService.removeProduct(product);
-
   }
 
   getSubTotal(product: Product) {

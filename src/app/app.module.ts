@@ -15,6 +15,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { BasketServiceProvider } from '../providers/basket-service/basket-service';
+import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { BasketServiceProvider } from '../providers/basket-service/basket-servic
     GooglePlus,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: LOCALE_ID, useValue: 'pt-BR'},
-    BasketServiceProvider
+    BasketServiceProvider,
+    UserAuthServiceProvider
   ]
 })
 export class AppModule {}
