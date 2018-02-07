@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Profile } from '../../models/profile';
 import { HomePage } from '../home/home';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { AdressSearchPage } from '../adress-search/adress-search';
 import 'rxjs/add/operator/take';
+import { Observable } from 'rxjs/Observable';
 
 declare var google: any;
 
@@ -19,7 +20,7 @@ declare var google: any;
 export class ProfilePage implements OnInit {
 
     profile = {} as Profile;
-    profileData: FirebaseObjectObservable<Profile>
+    profileData: Observable<Profile>
 
     isReadonly() {
         return true;
@@ -46,16 +47,17 @@ export class ProfilePage implements OnInit {
         public modalCtrl: ModalController) {
     }
 
-    ionViewWillLoad() {
-        this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).take(1).subscribe(prof => {
-            if (prof.email) {
-                this.profile = prof;
-                console.log("1  " + prof);
-            } else {
-                this.profile.email = this.auth.auth.currentUser.email;
-                console.log("2  " + prof);
-            }
-        });
+    // ionViewWillLoad() {
+    //     this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).valueChanges().take(1).map(prof => {
+        // this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).take(1).subscribe(prof => {
+        //     if (prof.email) {
+        //         this.profile = prof;
+        //         console.log("1  " + prof);
+        //     } else {
+        //         this.profile.email = this.auth.auth.currentUser.email;
+        //         console.log("2  " + prof);
+        //     }
+        // });
         // this.auth.authState.subscribe(data => {
         //     if (data && data.email && data.uid) {         
         //     //   this.profileData = this.afDatabase.object(`profile/${data.uid}`)        

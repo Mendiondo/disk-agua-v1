@@ -2,10 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { ListPage } from '../pages/list/list';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../pages/home/home';
+import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +17,12 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public afAuth: AngularFireAuth) {
+  constructor(
+    public platform: Platform, 
+    public statusBar: StatusBar, 
+    public splashScreen: SplashScreen, 
+    public afAuth: AngularFireAuth,
+    public userAuthService: UserAuthServiceProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -51,12 +56,13 @@ export class MyApp {
         } else {
           console.log("Not Cordova");
           this.rootPage = "DistributorPage";
-        }                
-        authObserver.unsubscribe();        
+        }  
+        this.userAuthService.setUserID(user.uid);
+        console.log("uid - " + user.uid);
       } else {
         this.rootPage = 'LoginPage';
-        authObserver.unsubscribe();        
       }
+      authObserver.unsubscribe();        
     });
   }
 

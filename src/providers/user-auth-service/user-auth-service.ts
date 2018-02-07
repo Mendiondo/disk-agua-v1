@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
+import { User } from '../../models/user';
 
 
 @Injectable()
 export class UserAuthServiceProvider {
 
-  uid: any;
+  uid: string;
 
-  constructor(private auth: AngularFireAuth) {
-    this.uid = "";
+  constructor(private auth: AngularFireAuth) {    
   }
 
-  setState() {
-    this.auth.authState.subscribe(auth => {                
-      this.uid = auth.uid
-    });
+  setUserID(uid: string) {
+    this.uid = uid;
+  }
+  
+  getUserID(): string {
+    return this.uid;
   }
 
 }

@@ -8,6 +8,7 @@ import { updateDate } from 'ionic-angular/util/datetime-util';
 import * as firebase from 'firebase/app';
 import { BasketServiceProvider } from '../../providers/basket-service/basket-service';
 import { Observable } from 'rxjs/Observable';
+import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
 
 @IonicPage()
 @Component({
@@ -23,16 +24,19 @@ export class AddProductPage {
     public navParams: NavParams,
     private afDatabase: AngularFireDatabase,
     private auth: AngularFireAuth,
-    public basketService: BasketServiceProvider) {
+    public basketService: BasketServiceProvider,
+    public userAuthService: UserAuthServiceProvider) {
   }
 
   ionViewDidLoad() {
-    let productLs = this.basketService.getProducts();    
-    if (productLs.length == 0) {
-      this.auth.authState.take(1).subscribe(auth => {                
+    let productLs = this.basketService.getProducts();
+    let uid = this.userAuthService.getUserID();
+    
+    if (productLs.length == 0) {    
         this.products$ = this.afDatabase
-        .list<Product>(`produtoCliente/${auth.uid}`, products => products.orderByChild('order'))
-        .snapshotChanges()      
+        .list<Product>(`produtoCliente/${uid}`, products => products.orderByChild('order'))        
+        .snapshotChanges()
+        .take(1)
         .map(
           changes => {
             return changes.map( c => ({
@@ -45,7 +49,6 @@ export class AddProductPage {
           this.basketService.setProducts(product);          
         });
         this.products$.take(1).subscribe(x => console.log(x))
-      });
     } else {
       this.products = productLs;
     }
