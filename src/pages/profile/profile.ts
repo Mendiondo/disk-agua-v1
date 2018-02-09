@@ -9,6 +9,7 @@ import { ModalController } from 'ionic-angular/components/modal/modal-controller
 import { AdressSearchPage } from '../adress-search/adress-search';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
+import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
 
 declare var google: any;
 
@@ -44,19 +45,37 @@ export class ProfilePage implements OnInit {
         private toast: ToastController,
         public navCtrl: NavController,
         public navParams: NavParams,
+        public userAuthServiceProvider: UserAuthServiceProvider,
         public modalCtrl: ModalController) {
     }
 
-    // ionViewWillLoad() {
-    //     this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).valueChanges().take(1).map(prof => {
+    ionViewWillLoad() {
+        this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).valueChanges().take(1)
+        .subscribe(profileParam => {            
+            if (profileParam['email']) {                
+                this.profile = this.userAuthServiceProvider.loadProfile(profileParam);
+                console.log("1  " + profileParam);
+            } else {
+                this.profile.email = this.auth.auth.currentUser.email;
+                console.log("2  " + profileParam);
+            }
+        });
+          
+        // .map(
+        //         changes => {
+        //             console.log(changes);
+        //         //   return changes.map( c => ({
+                //     key: c.payload.key, ...c.payload.val()
+                //   }))
+                // })
         // this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).take(1).subscribe(prof => {
-        //     if (prof.email) {
-        //         this.profile = prof;
-        //         console.log("1  " + prof);
-        //     } else {
-        //         this.profile.email = this.auth.auth.currentUser.email;
-        //         console.log("2  " + prof);
-        //     }
+            // if (prof.email) {
+            //     this.profile = prof;
+            //     console.log("1  " + prof);
+            // } else {
+            //     this.profile.email = this.auth.auth.currentUser.email;
+            //     console.log("2  " + prof);
+            // }
         // });
         // this.auth.authState.subscribe(data => {
         //     if (data && data.email && data.uid) {         
