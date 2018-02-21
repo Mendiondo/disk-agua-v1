@@ -3,9 +3,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Product } from '../../models/product';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { HomePage } from '../home/home';
-import { Distribuidor } from '../../models/distribuidor';
 import { Observable } from 'rxjs/Observable';
+import { Distributor } from '../../models/distributor';
+import { Adress } from '../../models/adress';
+import { AdressListServiceProvider } from '../../providers/adress-list-service/adress-list-service';
+
 
 @IonicPage()
 @Component({
@@ -13,50 +15,39 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: 'distributor.html',
 })
 export class DistributorPage {
+  distributor = {} as Distributor;
+  adress = {} as Adress;
+  adressList: Adress[];
+  level: string;
 
-  product = {} as Product;
-  // products$: FirebaseListObservable<Product[]>
-  products$: Observable<Product[]>
-  selectedValue: any;
-  distribuidor = {} as Distribuidor;
-
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
-    private afDatabase: AngularFireDatabase,
-    private auth: AngularFireAuth) {
+  isReadonly() {
+    return true;
   }
 
-  ionViewDidLoad() {    
-    this.auth.authState.take(1).subscribe(auth => {
-      this.products$ = this.afDatabase
-      .list<Product>(`produtoCliente/${auth.uid}`)
-      .snapshotChanges()      
-      .map(
-        changes => {
-          return changes.map( c => ({
-            key: c.payload.key, ...c.payload.val()
-          }))
-        }
-      )
-
-      // this.products$ = this.afDatabase.list(`produtoCliente/${auth.uid}`);
-      // this.products$.take(1).subscribe(x => { 
-      //    this.afDatabase.list(`produto`).take(1).subscribe(y => x.concat(y));
-      // });
-    });    
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private afDatabase: AngularFireDatabase,  
+    private auth: AngularFireAuth,
+    private adressService: AdressListServiceProvider) {
   }
 
-  save() {
-    this.auth.authState.take(1).subscribe(auth => {
-      this.product.clientId = auth.uid;
-      this.afDatabase.object(`produtoCliente/${auth.uid}/${this.product.name}`).set(this.product)
-      .then(() => this.navCtrl.setRoot("DistributorPage"))
-    })
+  ionViewDidLoad() {
+    this.adressList = new Array();
+  }
+  
+  setAdress(adressData) {
+    console.log("adr:" + adressData.terms[0].value);
+    this.adress.fullAdress = adressData.terms[0].value;
   }
 
-  selectProduct() {
-    this.product = this.selectedValue;
-    console.log(this.product);
+  save() {    
+    this.afDatabase.object(`distribuidor/${this.distributor.name}`).set(this.distributor)
+    .then(() => this.navCtrl.setRoot("DistributorPage"));
+  }
+
+  addAdress(adress: Adress) {
+    this.adressService.add(adress);
+    this.adressList.push(adress);
   }
 
 }

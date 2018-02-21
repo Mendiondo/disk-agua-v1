@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Observable';
-import { User } from '../../models/user';
 import { Profile } from '../../models/profile';
 
 
@@ -9,9 +6,6 @@ import { Profile } from '../../models/profile';
 export class UserAuthServiceProvider {
 
   uid: string;
-
-  constructor(private auth: AngularFireAuth) {    
-  }
 
   setUserID(uid: string) {
     this.uid = uid;
@@ -26,7 +20,7 @@ export class UserAuthServiceProvider {
     let profile = {} as Profile;
 
     profile.bairro = profileParam['bairro'];
-    profile.cidade = profileParam['bairro'];
+    profile.cidade = profileParam['cidade'];
     profile.complemento = profileParam['complemento'];
     profile.email = profileParam['email'];
     profile.nomeCompleto = profileParam['nomeCompleto'];

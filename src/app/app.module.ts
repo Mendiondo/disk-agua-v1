@@ -8,21 +8,18 @@ import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { GooglePlus } from '@ionic-native/google-plus';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { BasketServiceProvider } from '../providers/basket-service/basket-service';
 import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
+import { AdressListServiceProvider } from '../providers/adress-list-service/adress-list-service';
 
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage,
-    ListPage
+    MyApp    
   ],
   imports: [
     BrowserModule,
@@ -33,9 +30,7 @@ import { UserAuthServiceProvider } from '../providers/user-auth-service/user-aut
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage,
-    ListPage
+    MyApp    
   ],
   providers: [
     StatusBar,
@@ -44,7 +39,10 @@ import { UserAuthServiceProvider } from '../providers/user-auth-service/user-aut
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: LOCALE_ID, useValue: 'pt-BR'},
     BasketServiceProvider,
-    UserAuthServiceProvider
+    UserAuthServiceProvider,
+    AdressListServiceProvider,
+    AdressListServiceProvider,
+    AdressListServiceProvider
   ]
 })
 export class AppModule {}

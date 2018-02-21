@@ -1,40 +1,31 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Product } from '../../models/product';
-import { Cart } from '../../models/cart';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { updateDate } from 'ionic-angular/util/datetime-util';
-import * as firebase from 'firebase/app';
 import { BasketServiceProvider } from '../../providers/basket-service/basket-service';
 import { Observable } from 'rxjs/Observable';
-import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
 
 @IonicPage()
 @Component({
   selector: 'page-add-product',
   templateUrl: 'add-product.html',
 })
-export class AddProductPage {
-  // products$: FirebaseListObservable<Product[]>
+export class AddProductPage {  
   products$: Observable<Product[]>
   products: Product[];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private afDatabase: AngularFireDatabase,
-    private auth: AngularFireAuth,
-    public basketService: BasketServiceProvider,
-    public userAuthService: UserAuthServiceProvider) {
+    public basketService: BasketServiceProvider) {
   }
 
   ionViewDidLoad() {
-    let productLs = this.basketService.getProducts();
-    let uid = this.userAuthService.getUserID();
+    let productLs = this.basketService.getProducts();    
     
     if (productLs.length == 0) {    
         this.products$ = this.afDatabase
-        .list<Product>(`produtoCliente/${uid}`, products => products.orderByChild('order'))        
+        .list<Product>(`produto`, products => products.orderByChild('order'))        
         .snapshotChanges()
         .take(1)
         .map(
@@ -46,7 +37,7 @@ export class AddProductPage {
         );        
         this.products$.forEach(product => {
           this.products = product;
-          this.basketService.setProducts(product);          
+          this.basketService.setProducts(product);
         });
         this.products$.take(1).subscribe(x => console.log(x))
     } else {

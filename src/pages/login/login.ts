@@ -3,9 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-import { HomePage } from '../home/home';
 import { Platform } from 'ionic-angular';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { AddProductPage } from '../add-product/add-product';
 
 @IonicPage()
 @Component({
@@ -66,7 +66,7 @@ export class LoginPage {
 
       console.log(result);
       if (result) {
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(AddProductPage);
       }
     } catch (e) {
       console.error(e);

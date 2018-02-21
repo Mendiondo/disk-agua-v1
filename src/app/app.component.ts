@@ -2,9 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ListPage } from '../pages/list/list';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { HomePage } from '../pages/home/home';
 import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
 
 @Component({
@@ -28,7 +26,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [      
       { title: 'Cadastro', component: "ProfilePage" },
-      { title: 'Produtos', component: "DistributorPage" },
+      { title: 'Produtos', component: "ProductPage" },
+      { title: 'Distribuidor', component: "DistributorPage" },
       { title: 'Comprar', component: "AddProductPage" }
     ];
 
@@ -76,5 +75,14 @@ export class MyApp {
     this.afAuth.auth.signOut().then(auth => {
       this.nav.setRoot('LoginPage');
     }).catch((e) => console.error(e));
+  }
+
+  showMenu(): boolean {
+    if (this.rootPage == "LoginPage") {
+      console.log("1");
+      return false;
+    }
+    console.log("2");
+    return true;
   }
 }

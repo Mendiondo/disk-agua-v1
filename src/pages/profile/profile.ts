@@ -3,15 +3,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Profile } from '../../models/profile';
-import { HomePage } from '../home/home';
-import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
-import { AdressSearchPage } from '../adress-search/adress-search';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
 import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
 
-declare var google: any;
+// declare var google: any;
 
 @IonicPage()
 @Component({
@@ -41,8 +38,7 @@ export class ProfilePage implements OnInit {
     placedetails: any;
 
     constructor(private auth: AngularFireAuth,
-        private afDatabase: AngularFireDatabase,
-        private toast: ToastController,
+        private afDatabase: AngularFireDatabase,        
         public navCtrl: NavController,
         public navParams: NavParams,
         public userAuthServiceProvider: UserAuthServiceProvider,
@@ -52,7 +48,7 @@ export class ProfilePage implements OnInit {
     ionViewWillLoad() {
         this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).valueChanges().take(1)
         .subscribe(profileParam => {            
-            if (profileParam['email']) {                
+            if (profileParam != null && profileParam['email']) {                
                 this.profile = this.userAuthServiceProvider.loadProfile(profileParam);
                 console.log("1  " + profileParam);
             } else {
@@ -122,27 +118,27 @@ export class ProfilePage implements OnInit {
         this.address.set = false;
     }
 
-    private getPlaceDetail(place_id: string): void {
-        var self = this;
-        var request = {
-            placeId: place_id
-        };
-        this.placesService = new google.maps.places.PlacesService(this.map);
-        this.placesService.getDetails(request, callback);
-        function callback(place, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log('page > getPlaceDetail > place > ', place);
-                // set full address
-                this.profile.endereco = place.formatted_address;
+    // private getPlaceDetail(place_id: string): void {
+    //     var self = this;
+    //     var request = {
+    //         placeId: place_id
+    //     };
+    //     this.placesService = new google.maps.places.PlacesService(this.map);
+    //     this.placesService.getDetails(request, callback);
+    //     function callback(place, status) {
+    //         if (status == google.maps.places.PlacesServiceStatus.OK) {
+    //             console.log('page > getPlaceDetail > place > ', place);
+    //             // set full address
+    //             this.profile.endereco = place.formatted_address;
 
-                // populate
-                self.address.set = true;
-                console.log('page > getPlaceDetail > details > ', self.placedetails);
-            } else {
-                console.log('page > getPlaceDetail > status > ', status);
-            }
-        }
-    }
+    //             // populate
+    //             self.address.set = true;
+    //             console.log('page > getPlaceDetail > details > ', self.placedetails);
+    //         } else {
+    //             console.log('page > getPlaceDetail > status > ', status);
+    //         }
+    //     }
+    // }
 
     private initPlacedetails() {
         this.placedetails = {

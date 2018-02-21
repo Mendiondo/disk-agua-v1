@@ -1,0 +1,13 @@
+adress-search-field {
+    .adress-card {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 1.6rem;
+        padding: 16px;
+        text-overflow: ellipsis;
+        font-family: "Roboto", "Helvetica Neue", sans-serif;
+        color: white;
+        background-color: #FF6600;
+    }    
+}
