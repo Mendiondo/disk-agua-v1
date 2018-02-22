@@ -57,9 +57,14 @@
       <ion-option value="3">3</ion-option>
     </ion-select>
   </ion-item>  
-  <ion-list *ngFor="let adressItem of adressList">
-    <ion-item class="item item-block item-md item-toggle">{{adressItem.fullAdress}}</ion-item>
-  </ion-list>
   <button ion-button clear block (click)="addAdress(adress)">Adicionar Endereço</button>
+  <ion-grid>
+    <ion-row *ngFor="let adressItem of adressList">
+      <ion-col>{{adressItem.fullAdress}}</ion-col>
+      <ion-col>{{adressItem.isFullStreet}}</ion-col>
+      <ion-col>{{adressItem.nInitial}}</ion-col>
+      <ion-col>{{adressItem.nFinal}}</ion-col>
+    </ion-row>
+  </ion-grid>
   <button ion-button clear block (click)="save()">Salvar</button>
 </ion-content>

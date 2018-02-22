@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { Distributor } from '../../models/distributor';
 import { Adress } from '../../models/adress';
 import { AdressListServiceProvider } from '../../providers/adress-list-service/adress-list-service';
+import { empty } from 'rxjs/Observer';
 
 
 @IonicPage()
@@ -33,6 +34,7 @@ export class DistributorPage {
 
   ionViewDidLoad() {
     this.adressList = new Array();
+    this.adress.fullAdress = "Teste endereço grande!!!!"
   }
   
   setAdress(adressData) {
@@ -46,8 +48,21 @@ export class DistributorPage {
   }
 
   addAdress(adress: Adress) {
-    this.adressService.add(adress);
-    this.adressList.push(adress);
+    // this.adressService.add(adress);
+    let res = this.adressList   
+    .filter(item => item.fullAdress == adress.fullAdress);
+    console.log(res);
+    if (res.length == 0) {
+      this.adressList.push(adress);
+      this.adress = {} as Adress;
+      this.adress.fullAdress = "";
+      this.adress.isFullStreet = null;
+      this.adress.nInitial = null;
+      this.adress.nFinal = null;
+    } else {
+      alert("Endereço já cadastrado");
+    } 
+
   }
 
 }
