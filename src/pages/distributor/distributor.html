@@ -19,58 +19,6 @@
   <ion-item>
     <ion-label floating>Celular</ion-label>
     <ion-input [(ngModel)]="distributor.cel"></ion-input>
-  </ion-item>
-  <div class="adress-search">
-    <adress-search-field (adressData)="setAdress($event)"></adress-search-field>
-  </div>  
-  <ion-item>
-    <ion-label floating>Endereço</ion-label>
-    <ion-input [(ngModel)]="adress.fullAdress" [readonly]="true"></ion-input>
-  </ion-item>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label>Rua Inteira</ion-label>
-          <ion-checkbox [(ngModel)]="adress.isFullStreet"></ion-checkbox>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label>Número Inicial</ion-label>
-          <ion-input [(ngModel)]="adress.nInitial"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label>Número Final</ion-label>
-          <ion-input [(ngModel)]="adress.nFinal"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-item>
-    <ion-label floating>Nível</ion-label>
-    <ion-select [(ngModel)]="level" interface="popover">
-      <ion-option value="1" selected>1</ion-option>
-      <ion-option value="2">2</ion-option>
-      <ion-option value="3">3</ion-option>
-    </ion-select>
   </ion-item>  
-  <button ion-button clear block (click)="addAdress(adress)">Adicionar Endereço</button>
-  <ion-grid>
-    <ion-row class="grid-header" *ngIf="adressList">
-      <ion-col col-6>Endereço</ion-col>
-      <ion-col col-2>Rua inteira</ion-col>
-      <ion-col col-2>Número Inicial</ion-col>
-      <ion-col col-2>Número Final</ion-col>
-    </ion-row>
-    <ion-row *ngFor="let adressItem of adressList">
-      <ion-col col-6>{{adressItem.fullAdress}}</ion-col>
-      <ion-col col-2><span *ngIf="adressItem.isFullStreet">X</span></ion-col>
-      <ion-col col-2>{{adressItem.nInitial}}</ion-col>
-      <ion-col col-2>{{adressItem.nFinal}}</ion-col>
-    </ion-row>
-  </ion-grid>
   <button ion-button clear block (click)="save()">Salvar</button>
 </ion-content>

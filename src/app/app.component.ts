@@ -28,6 +28,7 @@ export class MyApp {
       { title: 'Cadastro', component: "ProfilePage" },
       { title: 'Produtos', component: "ProductPage" },
       { title: 'Distribuidor', component: "DistributorPage" },
+      { title: 'Endereços', component: "DistributorAdressPage" },
       { title: 'Comprar', component: "AddProductPage" }
     ];
 

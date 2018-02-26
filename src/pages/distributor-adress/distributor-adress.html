@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Endereços - Distribuidores</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>   
+    <ion-item class="distributor-field">
+      <ion-label floating>Distribuidor</ion-label>
+      <ion-select [(ngModel)]="selectedValue" interface="popover" (ionChange)="selectDistributor()">
+        <ion-option *ngFor="let distributor of distributors$ | async" [value]="distributor">{{distributor.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-card>
+      <adress-search-field (adressData)="setAdress($event)"></adress-search-field>  
+      <ion-item>
+        <ion-label floating>Endereço</ion-label>
+        <ion-input [(ngModel)]="adress.fullAdress" ></ion-input>
+        <!-- <ion-input [(ngModel)]="adress.fullAdress" [readonly]="true"></ion-input> -->
+      </ion-item>
+      <ion-grid>        
+        <ion-row>
+          <ion-col>
+              <ion-item>
+                <ion-label>Rua Inteira</ion-label>
+                <ion-checkbox [(ngModel)]="adress.isFullStreet"></ion-checkbox>          
+              </ion-item>        
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>Número Inicial</ion-label>
+              <ion-input #nInitial="ngModel" [(ngModel)]="adress.nInitial" pattern="[0-9]*"></ion-input>
+            </ion-item>
+            <div *ngIf="nInitial.invalid" class="invalid-field">Somente números</div>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>Número Final</ion-label>
+              <ion-input #nFinal="ngModel" [(ngModel)]="adress.nFinal" pattern="[0-9]*"></ion-input>
+            </ion-item>
+            <div *ngIf="nFinal.invalid" class="invalid-field">Somente números</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>          
+            <ion-col>
+              <ion-item>
+                <ion-label floating>Nível</ion-label>
+                <ion-select [(ngModel)]="adress.level" interface="popover">
+                  <ion-option value="1" selected>1</ion-option>
+                  <ion-option value="2">2</ion-option>
+                  <ion-option value="3">3</ion-option>
+                </ion-select>
+              </ion-item>  
+            </ion-col>
+          </ion-row>
+      </ion-grid>    
+      <button ion-button clear block (click)="addAdress(adress)" [disabled]="!nInitial.valid || !nFinal.valid">Adicionar Endereço</button>
+    </ion-card> 
+    <ion-grid>
+      <ion-row class="grid-header" *ngIf="adressList">
+        <ion-col col-7>Endereço</ion-col>
+        <ion-col col-1 text-center>Rua inteira</ion-col>
+        <ion-col col-1 text-center>Número Inicial</ion-col>
+        <ion-col col-1 text-center>Número Final</ion-col>
+        <ion-col col-1 text-center>Nível</ion-col>
+        <ion-col col-1></ion-col>
+      </ion-row>
+      <!-- <ion-scroll scrollY="true"> -->
+        <ion-row *ngFor="let adressItem of adressList">
+          <ion-col col-7>{{adressItem.fullAdress}}</ion-col>
+          <ion-col col-1 text-center><span *ngIf="adressItem.isFullStreet">x</span></ion-col>
+          <ion-col col-1 text-center>{{adressItem.nInitial}}</ion-col>
+          <ion-col col-1 text-center>{{adressItem.nFinal}}</ion-col>
+          <ion-col col-1 text-center>{{adressItem.level}}</ion-col>
+          <ion-col col-1 text-center><a (click)="removeAdress(adressItem)">Excluir</a></ion-col>
+        </ion-row>
+      <!-- </ion-scroll> -->
+    </ion-grid>
+    <button ion-button clear block (click)="save()">Salvar</button>
+  </ion-content>
+  

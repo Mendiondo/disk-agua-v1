@@ -21,7 +21,7 @@ export class BasketPage {
 
   ionViewDidLoad() {
     this.products = this.basketService.getProducts()
-    .filter(product => product.quantidade > 0);
+    .filter(product => product.amount > 0);
 
     this.total = this.products    
     .map(product => product.subTotal)

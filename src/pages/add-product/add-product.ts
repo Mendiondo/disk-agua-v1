@@ -25,7 +25,7 @@ export class AddProductPage {
     
     if (productLs.length == 0) {    
         this.products$ = this.afDatabase
-        .list<Product>(`produto`, products => products.orderByChild('order'))        
+        .list<Product>(`product`, products => products.orderByChild('order'))        
         .snapshotChanges()
         .take(1)
         .map(
@@ -54,7 +54,7 @@ export class AddProductPage {
   }
 
   getSubTotal(product: Product) {
-    return product.quantidade == 0 ? 0 : product.price * product.quantidade;
+    return product.amount == 0 ? 0 : product.price * product.amount;
   }
 
   comprar() {    

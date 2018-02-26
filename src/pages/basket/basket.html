@@ -9,7 +9,7 @@
   <ion-list>
     <ion-item *ngFor="let product of products">
       <h2 class="itemLeft">{{product.name}}</h2>
-      <h2 class="itemRight">{{product.quantidade}}x - {{product.price | currency:'BRL':true}}</h2>
+      <h2 class="itemRight">{{product.amount}}x - {{product.price | currency:'BRL':true}}</h2>
     </ion-item>
     <ion-item class="itemTotal">
       <h2 class="itemLeft">Total</h2>

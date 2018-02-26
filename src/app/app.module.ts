@@ -15,6 +15,7 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
 import { BasketServiceProvider } from '../providers/basket-service/basket-service';
 import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
 import { AdressListServiceProvider } from '../providers/adress-list-service/adress-list-service';
+import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { AdressListServiceProvider } from '../providers/adress-list-service/adre
     UserAuthServiceProvider,
     AdressListServiceProvider,
     AdressListServiceProvider,
-    AdressListServiceProvider
+    AdressListServiceProvider,
+    AlertServiceProvider
   ]
 })
 export class AppModule {}

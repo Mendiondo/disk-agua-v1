@@ -31,7 +31,7 @@
         <ion-col text-right>
           <h2 text-center color="blue" >{{product.subTotal | currency:'BRL':true}}</h2>          
           <ion-icon name="remove-circle" (click)="decrement(product)" color></ion-icon>
-          <span class="counter">{{product.quantidade}}</span>
+          <span class="counter">{{product.amount}}</span>
           <ion-icon name="add-circle" (click)="increment(product)"></ion-icon>
         </ion-col>
       </ion-row>

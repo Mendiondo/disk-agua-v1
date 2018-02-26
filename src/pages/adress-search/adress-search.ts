@@ -54,9 +54,11 @@ export class AdressSearchPage {
         this.acService.getPlacePredictions(config, function (predictions, status) {
             console.log('modal > getPlacePredictions > status > ', status);
             self.autocompleteItems = [];
-            predictions.forEach(function (prediction) {
-                self.autocompleteItems.push(prediction);
-            });
+            if (predictions != null) {
+                predictions.forEach(function (prediction) {
+                    self.autocompleteItems.push(prediction);
+                });
+            }
         });
     }
 

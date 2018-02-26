@@ -13,7 +13,7 @@ export class BasketServiceProvider {
   addProduct(product: Product) {
     const index = this.products.indexOf(product);
     
-    product.quantidade = product.quantidade + 1;
+    product.amount = product.amount + 1;
     product.subTotal = this.getSubTotal(product);
 
     this.products[index] = product;
@@ -23,7 +23,7 @@ export class BasketServiceProvider {
   removeProduct(product: Product) {
     const index = this.products.indexOf(product);
 
-    product.quantidade = product.quantidade == 0 ? 0 : product.quantidade - 1;
+    product.amount = product.amount == 0 ? 0 : product.amount - 1;
     product.subTotal = this.getSubTotal(product);
     
     this.products[index] = product;
@@ -39,7 +39,7 @@ export class BasketServiceProvider {
   }
 
   getSubTotal(product: Product) {
-    return product.quantidade == 0 ? 0 : product.price * product.quantidade;
+    return product.amount == 0 ? 0 : product.price * product.amount;
   }
 
 }

@@ -3,7 +3,7 @@ export interface Product {
     name: string;
     price: number;
     clientId: string;
-    quantidade: number;
+    amount: number;
     subTotal: number;
     order: number;
     isGlass: boolean;

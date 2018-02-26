@@ -6,4 +6,5 @@ export interface Adress {
     isFullStreet: boolean;
     nInitial: number;
     nFinal: number;
+    level: number;
 }
