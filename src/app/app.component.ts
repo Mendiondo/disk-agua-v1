@@ -14,6 +14,8 @@ export class MyApp {
   rootPage: any;
 
   pages: Array<{title: string, component: any}>;
+  pagesClient: Array<{title: string, component: any}>;
+  pagesDistributor: Array<{title: string, component: any}>;
 
   constructor(
     public platform: Platform, 
@@ -24,12 +26,16 @@ export class MyApp {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [      
+    this.pagesClient = [      
+      { title: 'Cadastro', component: "ProfilePage" },
+      { title: 'Comprar', component: "AddProductPage" }
+    ];
+    
+    this.pagesDistributor = [
       { title: 'Cadastro', component: "ProfilePage" },
       { title: 'Produtos', component: "ProductPage" },
       { title: 'Distribuidor', component: "DistributorPage" },
       { title: 'Endereços', component: "DistributorAdressPage" },
-      { title: 'Comprar', component: "AddProductPage" }
     ];
 
   }
@@ -53,9 +59,11 @@ export class MyApp {
         if(this.platform.is('cordova')) {
           console.log("Cordova");
           this.rootPage = "AddProductPage";
+          this.pages = this.pagesClient;
         } else {
           console.log("Not Cordova");
           this.rootPage = "DistributorPage";
+          this.pages = this.pagesDistributor;
         }  
         this.userAuthService.setUserID(user.uid);
         console.log("uid - " + user.uid);
