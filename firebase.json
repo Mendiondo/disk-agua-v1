@@ -1,5 +1,11 @@
 {
   "hosting": {
-    "public": "www"
+    "public": "www",
+    "rewrites": [
+      {
+        "source": "/sendemail**",        
+        "function": "app"
+      }
+    ]
   }
 }

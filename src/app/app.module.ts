@@ -1,4 +1,6 @@
+import { TooltipsModule } from 'ionic-tooltips';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler, NgModule, LOCALE_ID } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from 'angularfire2'
@@ -16,7 +18,7 @@ import { BasketServiceProvider } from '../providers/basket-service/basket-servic
 import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
 import { AdressListServiceProvider } from '../providers/adress-list-service/adress-list-service';
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,10 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    AngularFireDatabaseModule    
+    AngularFireDatabaseModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    TooltipsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

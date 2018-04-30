@@ -48,7 +48,7 @@ export class ProfilePage implements OnInit {
     ionViewWillLoad() {
         this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).valueChanges().take(1)
         .subscribe(profileParam => {            
-            if (profileParam != null && profileParam['email']) {                
+            if (profileParam != null && profileParam['email']) {
                 this.profile = this.userAuthServiceProvider.loadProfile(profileParam);
                 console.log("1  " + profileParam);
             } else {

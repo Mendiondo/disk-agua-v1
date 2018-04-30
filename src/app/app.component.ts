@@ -55,18 +55,18 @@ export class MyApp {
 
   login() {
     const authObserver = this.afAuth.authState.subscribe( user => {
+      if(this.platform.is('cordova')) {
+        console.log("Cordova");
+        this.rootPage = "AddProductPage";
+        this.pages = this.pagesClient;
+      } else {
+        console.log("Not Cordova");
+        this.rootPage = "DistributorPage";
+        this.pages = this.pagesClient;
+      }  
       if (user) {
-        if(this.platform.is('cordova')) {
-          console.log("Cordova");
-          this.rootPage = "AddProductPage";
-          this.pages = this.pagesClient;
-        } else {
-          console.log("Not Cordova");
-          this.rootPage = "DistributorPage";
-          this.pages = this.pagesDistributor;
-        }  
         this.userAuthService.setUserID(user.uid);
-        console.log("uid - " + user.uid);
+        console.log("uid - " + user.uid);        
       } else {
         this.rootPage = 'LoginPage';
       }
@@ -87,11 +87,11 @@ export class MyApp {
   }
 
   showMenu(): boolean {
-    if (this.rootPage == "LoginPage") {
-      console.log("1");
-      return false;
-    }
-    console.log("2");
+    // if (this.rootPage == "LoginPage") {
+    //   console.log("1");
+    //   return false;
+    // }
+    // console.log("2");
     return true;
   }
 }

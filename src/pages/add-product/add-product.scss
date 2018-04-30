@@ -5,40 +5,54 @@ page-add-product {
         ion-item{
             text-align: center;
         }       
-		.logo {			
-		    border-radius: inherit;
-            overflow: hidden;
-            width: 70%;
-            height: auto;            
-        }
-        .recy {
-            //width: 30%;
-            //margin-left: 25%;
-        }
-        ion-icon {
-            color: #FF6600;
-            font-size: 2.0em;
-            padding: 30px 5px 0px 5px;
-        }                
     }
-    .card-md {                
-        //background-color: #f9f9f9;
+    
+    .icon-counter {
+        color: #FF6600;
+        font-size: 2.0em;
+        padding: 15px 5px 0px 5px;
     }
+    
+    .info {
+        color: #FF6600;
+        font-size: 1.5em;
+        padding-right: 18px;
+        padding-bottom: 5px;
+    }
+
+    .logo {			
+        border-radius: inherit;
+        overflow: hidden;
+        width: 100%;
+        height: auto;            
+    }
+
+    .text {
+        color: #FF6600;
+        font-size: medium;        
+    }
+        
     .counter {
         font-size: 20px;
         vertical-align: super;
     }
+    
     .price{
         padding-top: 10px;
-
     }
-    
+
     .item-inner {
         padding-right: 0px;
     }
 
     .item-md ion-avatar[item-start]{
       margin: 8px 0px 8px 0;
+    }
+
+    .recycle {
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
     }
     
 }

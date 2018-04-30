@@ -23,7 +23,7 @@ export class AddProductPage {
   ionViewDidLoad() {
     let productLs = this.basketService.getProducts();    
     
-    if (productLs.length == 0) {    
+    // if (productLs.length == 0) {    
         this.products$ = this.afDatabase
         .list<Product>(`product`, products => products.orderByChild('order'))        
         .snapshotChanges()
@@ -40,9 +40,9 @@ export class AddProductPage {
           this.basketService.setProducts(product);
         });
         this.products$.take(1).subscribe(x => console.log(x))
-    } else {
-      this.products = productLs;
-    }
+    // } else {
+    //   this.products = productLs;
+    // }
   }
 
   increment(product: Product) {    

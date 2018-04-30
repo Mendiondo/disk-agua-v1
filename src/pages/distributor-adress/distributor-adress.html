@@ -57,10 +57,10 @@
             </ion-col>
           </ion-row>
       </ion-grid>    
-      <button ion-button clear block (click)="addAdress(adress)" [disabled]="!nInitial.valid || !nFinal.valid">Adicionar Endereço</button>
+      <button ion-button clear block (click)="save(adress)" [disabled]="!nInitial.valid || !nFinal.valid">Adicionar Endereço</button>
     </ion-card> 
-    <ion-grid>
-      <ion-row class="grid-header" *ngIf="adressList">
+    <ion-grid *ngIf="adressList?.length > 0">
+      <ion-row class="grid-header">
         <ion-col col-7>Endereço</ion-col>
         <ion-col col-1 text-center>Rua inteira</ion-col>
         <ion-col col-1 text-center>Número Inicial</ion-col>
@@ -79,6 +79,6 @@
         </ion-row>
       <!-- </ion-scroll> -->
     </ion-grid>
-    <button ion-button clear block (click)="save()">Salvar</button>
+    <!-- <button ion-button clear block (click)="save()">Salvar</button> -->
   </ion-content>
   
