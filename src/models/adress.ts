@@ -1,4 +1,5 @@
 export interface Adress {
+    adressId: string;
     distributorId1: string;
     distributorId2: string;
     distributorId3: string;

@@ -10,7 +10,7 @@
 <ion-content padding>
   <ion-item>
     <ion-label floating>Nome Completo</ion-label>
-    <ion-input [(ngModel)]="profile.nomeCompleto"></ion-input>
+    <ion-input [(ngModel)]="profile.fullName"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Email</ion-label>    
@@ -23,24 +23,24 @@
     </ion-card-header>
     <ion-item *ngIf="isAdressSelected()">
       <ion-label floating>Rua</ion-label>
-      <ion-input [(ngModel)]="profile.rua" [readonly]="isReadonly()" ></ion-input>
+      <ion-input [(ngModel)]="profile.street" [readonly]="isReadonly()" ></ion-input>
     </ion-item>
     <ion-item *ngIf="isAdressSelected()">
       <ion-label floating>Bairro</ion-label>
-      <ion-input [(ngModel)]="profile.bairro" [readonly]="isReadonly()" ></ion-input>
+      <ion-input [(ngModel)]="profile.district" [readonly]="isReadonly()" ></ion-input>
     </ion-item>
     <ion-item *ngIf="isAdressSelected()">
       <ion-label floating>Cidade</ion-label>
-      <ion-input [(ngModel)]="profile.cidade" [readonly]="isReadonly()" ></ion-input>
+      <ion-input [(ngModel)]="profile.city" [readonly]="isReadonly()" ></ion-input>
     </ion-item>
   </ion-card>
   <ion-item *ngIf="isAdressSelected()">
     <ion-label floating>Número</ion-label>
-    <ion-input [(ngModel)]="profile.numero"></ion-input>
+    <ion-input [(ngModel)]="profile.number"></ion-input>
   </ion-item>
   <ion-item *ngIf="isAdressSelected()">
     <ion-label floating>Complemento</ion-label>
-    <ion-input [(ngModel)]="profile.complemento"></ion-input>
+    <ion-input [(ngModel)]="profile.additionalAdress"></ion-input>
   </ion-item>
 
   <button ion-button clear block (click)="createProfile()">Salvar</button>

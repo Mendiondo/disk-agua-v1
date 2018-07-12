@@ -29,7 +29,7 @@
           <img *ngIf="product.isGlass" class="recycle" src="assets/imgs/recycle.png" />
         </ion-col>
         <ion-col text-right col-4>
-          <ion-icon name="ios-arrow-down" class="info" tooltip="Vidro 500ml Sem Gás Retornável Descartável" positionV="bottom"> info</ion-icon>
+          <ion-icon name="add" class="info" tooltip="{{product.description}}" positionV="bottom"> info</ion-icon>
           <div text-center class="text">{{product.subTotal | currency:'BRL':true}}</div>
           <ion-icon name="remove-circle" class="icon-counter" (click)="decrement(product)"></ion-icon>
           <span class="counter">{{product.amount}}</span>

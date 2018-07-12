@@ -1,9 +1,10 @@
 export interface Profile {
-    nomeCompleto: string;
-    rua: string;
-    bairro: string;
-    cidade: string;
-    numero: string;
-    complemento: string;
+    fullName: string;
+    street: string;
+    district: string;
+    city: string;
+    number: string;
+    additionalAdress: string;
+    adressId: string;
     email: string;
 }

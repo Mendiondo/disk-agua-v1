@@ -7,4 +7,5 @@ export interface Product {
     subTotal: number;
     order: number;
     isGlass: boolean;
+    description: string;
 }

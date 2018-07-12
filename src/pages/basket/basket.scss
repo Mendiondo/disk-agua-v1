@@ -10,14 +10,15 @@ page-basket {
         margin-top: -0.3rem;
     }
     .itemTotal {
-        background-color: #FF6600;;        
-        color: white
+        //background-color: #FF6600;        
+        color: #FF6600;
     }
     .payment {
         ion-list-header {
             background-color: #FF6600;
             color: white;
+            margin-bottom: 0;
         }
-        padding-top: 35px;
+        padding-top: 15px;
     }
 }

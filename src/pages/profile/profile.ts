@@ -25,7 +25,7 @@ export class ProfilePage implements OnInit {
     }
 
     isAdressSelected() {
-        return this.profile.rua != null;
+        return this.profile.street != null;
     }
 
     address: any = {
@@ -46,7 +46,7 @@ export class ProfilePage implements OnInit {
     }
 
     ionViewWillLoad() {
-        this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).valueChanges().take(1)
+        this.afDatabase.object(`client/${this.auth.auth.currentUser.uid}`).valueChanges().take(1)
         .subscribe(profileParam => {            
             if (profileParam != null && profileParam['email']) {
                 this.profile = this.userAuthServiceProvider.loadProfile(profileParam);
@@ -56,38 +56,11 @@ export class ProfilePage implements OnInit {
                 console.log("2  " + profileParam);
             }
         });
-          
-        // .map(
-        //         changes => {
-        //             console.log(changes);
-        //         //   return changes.map( c => ({
-                //     key: c.payload.key, ...c.payload.val()
-                //   }))
-                // })
-        // this.afDatabase.object(`cliente/${this.auth.auth.currentUser.uid}`).take(1).subscribe(prof => {
-            // if (prof.email) {
-            //     this.profile = prof;
-            //     console.log("1  " + prof);
-            // } else {
-            //     this.profile.email = this.auth.auth.currentUser.email;
-            //     console.log("2  " + prof);
-            // }
-        // });
-        // this.auth.authState.subscribe(data => {
-        //     if (data && data.email && data.uid) {         
-        //     //   this.profileData = this.afDatabase.object(`profile/${data.uid}`)        
-        //     //   this.profileData = this.afDatabase.object(`cliente-${data.uid}`);
-        //     console.log(data.uid);
-        //     this.afDatabase.object(`cliente/${this.auth.auth.currentUser.email}`).subscribe(prof => this.profile = prof);
-
-        //     }      
-        //   })
-
     }
 
     createProfile() {
         this.auth.authState.take(1).subscribe(auth => {
-            this.afDatabase.object(`cliente/${auth.uid}`).set(this.profile)
+            this.afDatabase.object(`client/${auth.uid}`).set(this.profile)
                 .then(() => this.navCtrl.setRoot("AddProductPage"))
         })
     }
@@ -104,9 +77,10 @@ export class ProfilePage implements OnInit {
         modal.onDidDismiss(data => {
             console.log('page > modal dismissed > data > ', data);
             if (data) {
-                this.profile.rua = data.terms[0].value
-                this.profile.bairro = data.terms[1].value
-                this.profile.cidade = data.terms[2].value
+                this.profile.adressId = data.id;
+                this.profile.street = data.terms[0].value
+                this.profile.district = data.terms[1].value
+                this.profile.city = data.terms[2].value
             }
         })
         modal.present();

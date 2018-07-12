@@ -13,12 +13,14 @@ import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Firebase } from '@ionic-native/firebase';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { BasketServiceProvider } from '../providers/basket-service/basket-service';
 import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
 import { AdressListServiceProvider } from '../providers/adress-list-service/adress-list-service';
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 import { HttpClientModule } from '@angular/common/http';
+import { CloudMessagingProvider } from '../providers/cloud-messaging/cloud-messaging';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { HttpClientModule } from '@angular/common/http';
     AdressListServiceProvider,
     AdressListServiceProvider,
     AdressListServiceProvider,
-    AlertServiceProvider
+    AlertServiceProvider,
+    Firebase,
+    CloudMessagingProvider
   ]
 })
 export class AppModule {}

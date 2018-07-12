@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
+import { CloudMessagingProvider } from '../providers/cloud-messaging/cloud-messaging';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,7 +23,8 @@ export class MyApp {
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen, 
     public afAuth: AngularFireAuth,
-    public userAuthService: UserAuthServiceProvider) {
+    public userAuthService: UserAuthServiceProvider,
+    public cloudMessaging: CloudMessagingProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -48,7 +50,7 @@ export class MyApp {
       //this.statusBar.overlaysWebView(true);
       this.statusBar.backgroundColorByHexString('#FF6600');
       this.splashScreen.hide();
-      this.login();
+      this.login();      
       
     });
   }
@@ -66,7 +68,18 @@ export class MyApp {
       }  
       if (user) {
         this.userAuthService.setUserID(user.uid);
-        console.log("uid - " + user.uid);        
+        console.log("uid - " + user.uid);
+        
+        // this.cloudMessaging.getToken(user.uid);
+
+        this.cloudMessaging.listenToNotifications()
+        .subscribe((res) => {
+            if (res.tap) {
+              // since firebase sends always string as data you have to parse it
+              let data = JSON.parse(res.data)              
+              console.log(data);
+            }
+        })
       } else {
         this.rootPage = 'LoginPage';
       }

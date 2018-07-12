@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Profile } from '../../models/profile';
+import { Distributor } from '../../models/distributor';
 
 
 @Injectable()
@@ -17,15 +18,16 @@ export class UserAuthServiceProvider {
 
   
   loadProfile(profileParam: any) {
+    //type User = Profile | Distributor;
     let profile = {} as Profile;
 
-    profile.bairro = profileParam['bairro'];
-    profile.cidade = profileParam['cidade'];
-    profile.complemento = profileParam['complemento'];
+    profile.district = profileParam['district'];
+    profile.city = profileParam['city'];
+    profile.additionalAdress = profileParam['additionalAdress'];
     profile.email = profileParam['email'];
-    profile.nomeCompleto = profileParam['nomeCompleto'];
-    profile.numero = profileParam['numero'];
-    profile.rua = profileParam['rua'];
+    profile.fullName = profileParam['fullName'];
+    profile.number = profileParam['number'];
+    profile.street = profileParam['street'];
 
     return profile;
 }

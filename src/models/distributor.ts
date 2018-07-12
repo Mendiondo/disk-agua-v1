@@ -1,7 +1,12 @@
 export interface Distributor {
     id: string;
-    name: string;
+    fullName: string;
     email: string;
     phone: string;
-    cel: string;    
+    cel: string;   
+    street: string;
+    district: string;
+    city: string;
+    number: string;
+    additionalAdress: string; 
 }

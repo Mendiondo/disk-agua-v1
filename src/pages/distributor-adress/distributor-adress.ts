@@ -82,7 +82,7 @@ selectDistributor() {
 }
 
   setAdress(adressData) {    
-    this.adress.fullAdress = adressData.terms[0].value + " - " + adressData.terms[1].value;
+    this.adress.fullAdress = adressData.terms[0].value + "_" + adressData.terms[1].value + "_" + adressData.terms[2].value;
   }
 
   save(adress: Adress) {

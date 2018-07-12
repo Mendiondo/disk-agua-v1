@@ -13,7 +13,7 @@
     </ion-item>
     <ion-item class="itemTotal">
       <h2 class="itemLeft">Total</h2>
-      <h2 class="itemRight">{{total | currency:'BRL':true}}</h2>
+      <h2 class="itemRight">{{order.total | currency:'BRL':true}}</h2>
     </ion-item>
   </ion-list>
 
@@ -34,8 +34,10 @@
   </ion-list>
 
   <ion-item>
-      <ion-label color="primary" floating>Troco para</ion-label>
+      <ion-label color="primary" >Troco para</ion-label>
       <ion-input name="payment" type="number" pattern="[0-9]*"></ion-input>
   </ion-item>
-
+  <div text-center>
+    <button ion-button color="primary" (click)="checkout()">Finalizar Compra</button>
+  </div>
 </ion-content>
