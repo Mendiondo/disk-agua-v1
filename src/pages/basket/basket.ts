@@ -67,7 +67,7 @@ export class BasketPage {
         let date = new Date();
 
         this.order.user = this.userAuthServiceProvider.loadProfile(profileParam);
-        this.order.id = date.toISOString();
+        this.order.id = Math.ceil(Math.random() * Math.pow(10,7));
         this.order.dtOrder = date;
         this.order.status = OrderStatus.EM_ABERTO;
         
@@ -76,23 +76,21 @@ export class BasketPage {
         .subscribe(adress => {
           console.log("adress - " + adress.distributorId1 +"%%"+ adress.fullAdress);
           this.order.adress = adress;
-          (this.afDatabase.object(`distributor/${adress.distributorId1}`).valueChanges() as Observable<Distributor>).take(1)
+          (this.afDatabase.object(`distributor-by-id/${adress.distributorId1}/${fullAdress}`).valueChanges() as Observable<Distributor>).take(1)
           .subscribe(distributor => {
             this.order.distributor = distributor;
             console.log("distributor - " + distributor);
-
+            
+            
+            this.afDatabase.object("orders/" + this.order.id).set(this.order)
+            .then(() => this.alertService.showAlert("Aviso", "Distribuidor salvo com sucesso"));
           });
 
         });
-
-        //this.afDatabase.object("orders/" + this.order.id).set(this.order)
-        //.then(() => this.alertService.showAlert("Aviso", "Distribuidor salvo com sucesso"));
-
       }, error => {
         this.alertService.showAlert("Alerta", "Favor atualizar seu cadastro!");
         return;
       });
-    this.order.products = this.products;    
   }
 
   goBack() {

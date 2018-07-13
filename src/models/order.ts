@@ -4,7 +4,7 @@ import { Distributor } from './distributor';
 import { Adress } from "./adress";
 
 export interface Order {
-    id: string;
+    id: number;
     user: Profile;
     products: Product[];
     total: number;
