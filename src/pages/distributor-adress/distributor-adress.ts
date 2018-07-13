@@ -83,6 +83,7 @@ selectDistributor() {
 
   setAdress(adressData) {    
     this.adress.fullAdress = adressData.terms[0].value + "_" + adressData.terms[1].value + "_" + adressData.terms[2].value;
+    this.adress.adressId = adressData.id;
   }
 
   save(adress: Adress) {
@@ -112,7 +113,7 @@ selectDistributor() {
           console.log(snapshot);                        
           if (snapshot[`distributorId${adress.level}`]) {
             this.alertService.showAlert("Aviso", "Endereço já cadastrado para este nível!");            
-          } else {
+          } else {            
             this.adress.distributorId1 = snapshot["distributorId1"] ? snapshot["distributorId1"] : null;
             this.adress.distributorId2 = snapshot["distributorId2"] ? snapshot["distributorId2"] : null;
             this.adress.distributorId3 = snapshot["distributorId3"] ? snapshot["distributorId3"] : null;

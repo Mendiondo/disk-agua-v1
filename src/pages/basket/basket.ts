@@ -10,6 +10,8 @@ import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { OrderStatus } from '../../models/order-status';
 import { Adress } from '../../models/adress';
+import { Observable } from 'rxjs/Observable';
+import { Distributor } from '../../models/distributor';
 
 
 @IonicPage()
@@ -70,20 +72,18 @@ export class BasketPage {
         this.order.status = OrderStatus.EM_ABERTO;
         
         let fullAdress = this.order.user.street + "_" + this.order.user.district + "_" + this.order.user.city;
-        this.afDatabase.object(`distributor-by-adress/${fullAdress}`).valueChanges().take(1)
+        (this.afDatabase.object(`distributor-by-adress/${fullAdress}`).valueChanges() as Observable<Adress>)
         .subscribe(adress => {
-          console.log(adress)
-          //this.order.adress = adress.id;
-          this.afDatabase.object(`distributor/${adress['distributorId1']}`).valueChanges().take(1)
+          console.log("adress - " + adress.distributorId1 +"%%"+ adress.fullAdress);
+          this.order.adress = adress;
+          (this.afDatabase.object(`distributor/${adress.distributorId1}`).valueChanges() as Observable<Distributor>).take(1)
           .subscribe(distributor => {
-            //this.order.distributor = distributor;
-            console.log(distributor);
+            this.order.distributor = distributor;
+            console.log("distributor - " + distributor);
 
           });
 
         });
-
-
 
         //this.afDatabase.object("orders/" + this.order.id).set(this.order)
         //.then(() => this.alertService.showAlert("Aviso", "Distribuidor salvo com sucesso"));
