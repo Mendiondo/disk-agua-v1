@@ -61,16 +61,14 @@ export class MyApp {
         console.log("Cordova");
         this.rootPage = "AddProductPage";
         this.pages = this.pagesClient;
+        this.cloudMessaging.getToken(user.uid);
       } else {
         console.log("Not Cordova");
         this.rootPage = "DistributorPage";
         this.pages = this.pagesClient;
       }  
       if (user) {
-        this.userAuthService.setUserID(user.uid);
-        console.log("uid - " + user.uid);
-        
-        // this.cloudMessaging.getToken(user.uid);
+        this.userAuthService.setUserID(user.uid);               
 
         this.cloudMessaging.listenToNotifications()
         .subscribe((res) => {

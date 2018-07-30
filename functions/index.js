@@ -54,34 +54,27 @@ sendemail.get('/', (req, res) => {
 exports.sendemail = functions.https.onRequest(sendemail);
 
 const sendpush = express();
-function sendPush(token) {
+function sendPush(token, title, body) {
     const payload = {
         notification: {
-            title: 'Nova compra - Fulano da Sivla',
-            body: `Nova compra - Fulano da silva - 2 Pet 5L - R$20,00`
+            title: title,
+            body: body
         }
     }
-    admin.messaging().sendToDevice(token, payload).then(() => {
-        return true;
-    });
+    return admin.messaging().sendToDevice(token, payload);
 }
 
 sendpush.get('/', (req, res) => {
     cors(req, res, () => {
         console.log("sendpush");
-        // res.set('Access-Control-Allow-Origin', '*');
-        // res.set('Access-Control-Allow-Methods', 'GET, POST');
-        sendPush("fQ0f8HiA8Vk:APA91bHadBCMOkXkOqGp_zu7yuRtIMRDjPVmYNUJkUXS7F5Z4CS8SYvEs1Svl2wRWIJZ-VDss-A6jsIG1M3h_If1DZprSkPwuOP2B-XhVpziMzPOqncTqHBEd1PcNCRaOW3w8YrGBGaw")
+        console.log(req.query);
+        // console.log(req.query.token);
+        sendPush(req.query.token, req.query.title, req.query.body)
             .then(() => {
                 return res.status(200);
             }).catch(function (err) {
                 return res.status(500).send(err);
             });
-        // .then(
-        //     res.status(200)
-        // ).catch(function (err) {
-        //     res.status(500).send(err);
-        // })
     });
 });
 exports.sendpush = functions.https.onRequest(sendpush);

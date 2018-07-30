@@ -7,6 +7,7 @@ import { Distributor } from '../../models/distributor';
 export class UserAuthServiceProvider {
 
   uid: string;
+  tokenPushNotification: string;
 
   setUserID(uid: string) {
     this.uid = uid;
@@ -15,7 +16,14 @@ export class UserAuthServiceProvider {
   getUserID(): string {
     return this.uid;
   }
-
+  
+  setUserTokenPushNotification(tokenPushNotification: string) {
+    this.tokenPushNotification = tokenPushNotification;
+  }
+  
+  getUserTokenPushNotification(): string {
+    return this.tokenPushNotification;
+  }
   
   loadProfile(profileParam: any) {
     //type User = Profile | Distributor;

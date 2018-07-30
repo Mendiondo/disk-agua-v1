@@ -64,17 +64,17 @@ export class LoginPage {
   }
 
   loginWithFacebook() {
-    try {
-      //const result = this.auth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider);
-      const result = this.auth.auth.signInAndRetrieveDataWithCredential(new firebase.auth.GoogleAuthProvider);
+    // try {
+    //   //const result = this.auth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider);
+    //   const result = this.auth.auth.signInAndRetrieveDataWithCredential(new firebase.auth.GoogleAuthProvider);
 
-      console.log(result);
-      if (result) {
-        this.navCtrl.setRoot(AddProductPage);
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    //   console.log(result);
+    //   if (result) {
+    //     this.navCtrl.setRoot(AddProductPage);
+    //   }
+    // } catch (e) {
+    //   console.error(e);
+    // }
   }
 
   register() {

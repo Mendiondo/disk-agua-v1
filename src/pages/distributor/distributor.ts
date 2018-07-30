@@ -39,7 +39,7 @@ export class DistributorPage {
         this.distributor.id = user.uid;
         this.afDatabase.object(`distributor/${this.distributor.id}`).set(this.distributor);
         this.navCtrl.setRoot("DistributorPage");
-        //this.sendEmail(pass);
+        this.sendEmail(pass);
         secondaryApp.delete();
       }).catch(err => {
         this.alertService.showAlert("Aviso", err);
