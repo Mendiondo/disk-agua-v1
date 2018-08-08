@@ -78,7 +78,8 @@ export class BasketPage {
                 this.order.distributor = distributor;
                 console.log("distributor - " + distributor);
                 
-                this.afDatabase.object("orders/" + this.order.id).set(this.order)
+                this.afDatabase.list("orders").push(this.order)
+                // this.afDatabase.object("orders/" + this.order.id).set(this.order)
                   .then(() => {
                     this.alertService.showAlert("Aviso", "Compra efetuada com sucesso");
                     (this.afDatabase.object(`devices/${this.auth.auth.currentUser.uid}`).valueChanges() as Observable<Device>).take(1)
