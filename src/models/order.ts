@@ -4,12 +4,12 @@ import { Distributor } from './distributor';
 import { Adress } from "./adress";
 
 export interface Order {
-    id: number;
+    pushKey: string;
     user: Profile;
     products: Product[];
     total: number;
     adress: Adress;
     distributor: Distributor;
-    dtOrder: Date;
+    dtOrder: string;
     status:  string;   
 }

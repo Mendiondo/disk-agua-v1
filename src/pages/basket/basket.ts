@@ -13,6 +13,7 @@ import { Adress } from '../../models/adress';
 import { Observable } from 'rxjs/Observable';
 import { Distributor } from '../../models/distributor';
 import { Device } from '../../models/device';
+import * as firebase from 'firebase/app';
 
 
 @IonicPage()
@@ -64,8 +65,8 @@ export class BasketPage {
         let date = new Date();
 
         this.order.user = this.userAuthServiceProvider.loadProfile(profileParam);
-        this.order.id = Math.ceil(Math.random() * Math.pow(10, 7));
-        this.order.dtOrder = date;
+        // this.order.id = Math.ceil(Math.random() * Math.pow(10, 7));
+        this.order.dtOrder = date.toDateString();
         this.order.status = OrderStatus.EM_ABERTO;
 
         let fullAdress = this.order.user.street + "_" + this.order.user.district + "_" + this.order.user.city;
@@ -77,17 +78,25 @@ export class BasketPage {
               .subscribe(distributor => {
                 this.order.distributor = distributor;
                 console.log("distributor - " + distributor);
-                
-                this.afDatabase.list("orders").push(this.order)
+                                
+                this.order.pushKey = this.afDatabase.createPushId();
+                console.log(this.order.pushKey);
+                firebase.database().ref().update({                
+                  [`orders/${this.order.pushKey}`] : this.order,
+                  [`ordersByDistId/${this.order.adress.distributorId1}`] : this.order
+                }).then(() =>{
+                  this.alertService.showAlert("Aviso", "Compra efetuada com sucesso!!!");
+                });                
+
                 // this.afDatabase.object("orders/" + this.order.id).set(this.order)
-                  .then(() => {
-                    this.alertService.showAlert("Aviso", "Compra efetuada com sucesso");
-                    (this.afDatabase.object(`devices/${this.auth.auth.currentUser.uid}`).valueChanges() as Observable<Device>).take(1)
-                    .subscribe(device => {      
-                      console.log("Token: - " + device.token)                
-                      this.sendPush(device.token);
-                    });
-                  });
+                //   .then(() => {
+                //     this.alertService.showAlert("Aviso", "Compra efetuada com sucesso");
+                //     (this.afDatabase.object(`devices/${this.auth.auth.currentUser.uid}`).valueChanges() as Observable<Device>).take(1)
+                //     .subscribe(device => {      
+                //       console.log("Token: - " + device.token)                
+                //       this.sendPush(device.token);
+                //     });
+                //   });
               });
 
           });
@@ -107,5 +116,14 @@ export class BasketPage {
     return date.getUTCMilliseconds().toString();
   }
 
+  getShortOrder(order: Order, pushKey: string): Order {
+    let shortOrder = {} as Order;
+    shortOrder.dtOrder = order.dtOrder;
+    shortOrder.status = order.status;
+    shortOrder.status = order.status;
+    shortOrder.pushKey = pushKey;
+
+    return shortOrder;
+  }
 
 }
