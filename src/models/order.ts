@@ -4,7 +4,7 @@ import { Distributor } from './distributor';
 import { Adress } from "./adress";
 
 export interface Order {
-    pushKey: string;
+    id: string;
     user: Profile;
     products: Product[];
     total: number;

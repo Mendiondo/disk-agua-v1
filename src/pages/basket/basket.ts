@@ -2,18 +2,13 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BasketServiceProvider } from '../../providers/basket-service/basket-service';
 import { Product } from '../../models/product';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Order } from '../../models/order';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { OrderStatus } from '../../models/order-status';
-import { Adress } from '../../models/adress';
-import { Observable } from 'rxjs/Observable';
-import { Distributor } from '../../models/distributor';
-import { Device } from '../../models/device';
-import * as firebase from 'firebase/app';
+import { DistributorServiceProvider } from '../../providers/distributor-service/distributor-service';
 
 
 @IonicPage()
@@ -28,75 +23,46 @@ export class BasketPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public basketService: BasketServiceProvider,
+    private basketService: BasketServiceProvider,
     private afDatabase: AngularFireDatabase,
     private auth: AngularFireAuth,
-    public userAuthServiceProvider: UserAuthServiceProvider,
+    private userAuthService: UserAuthServiceProvider,
     private alertService: AlertServiceProvider,
-    private http: HttpClient) {
+    private distributorService: DistributorServiceProvider) {
   }
 
   ionViewDidLoad() {
     this.products = this.basketService.getProducts()
       .filter(product => product.amount > 0);
+
     this.order.products = this.products;
+
     this.order.total = this.products
       .map(product => product.subTotal)
       .reduce((total, subTotal) => total + subTotal, 0)
   }
 
-  sendPush(token: string) {
-    let params = '?token=' + token;
-    params += '&title=Nova compra ' + this.order.user.fullName;
-    params += '&body=' + this.order.products.map(product => product.amount + "x " + product.name + "\n");
-    console.log(params);
-    return this.http.get('https://us-central1-disk-agua-santa-catarina.cloudfunctions.net/sendpush/' + params)
-      .subscribe(
-        res => {
-          console.log("Sendpush - " + res.toString);
-        },
-        msg => console.error(`Error: ${msg.status} ${msg.statusText}`)
-      );
-  }
-
   checkout() {
-    this.afDatabase.object(`client/${this.auth.auth.currentUser.uid}`).valueChanges().take(1)
+    let userId = this.auth.auth.currentUser.uid;
+    this.afDatabase.object(`client/${userId}`).valueChanges().take(1)
       .subscribe(profileParam => {
         let date = new Date();
 
-        this.order.user = this.userAuthServiceProvider.loadProfile(profileParam);
-        // this.order.id = Math.ceil(Math.random() * Math.pow(10, 7));
+        this.order.user = this.userAuthService.loadProfile(profileParam);
         this.order.dtOrder = date.toDateString();
         this.order.status = OrderStatus.EM_ABERTO;
 
-        let fullAdress = this.order.user.street + "_" + this.order.user.district + "_" + this.order.user.city;
-        (this.afDatabase.object(`distributor-by-adress/${fullAdress}`).valueChanges() as Observable<Adress>)
-          .subscribe(adress => {
-            console.log("adress - " + adress.distributorId1 + "%%" + adress.fullAdress);
+        let fullAdress = this.distributorService.getFullAdress(this.order);
+        this.distributorService.distributorByAdress(fullAdress).subscribe(adress => {
             this.order.adress = adress;
-            (this.afDatabase.object(`distributor-by-id/${adress.distributorId1}/${fullAdress}`).valueChanges() as Observable<Distributor>).take(1)
-              .subscribe(distributor => {
+            this.distributorService.distributorById(fullAdress, adress).subscribe(distributor => {
                 this.order.distributor = distributor;
                 console.log("distributor - " + distributor);
                                 
-                this.order.pushKey = this.afDatabase.createPushId();
-                console.log(this.order.pushKey);
-                firebase.database().ref().update({                
-                  [`orders/${this.order.pushKey}`] : this.order,
-                  [`ordersByDistId/${this.order.adress.distributorId1}`] : this.order
-                }).then(() =>{
+                this.basketService.createOrder(this.order, userId).then(() =>{
                   this.alertService.showAlert("Aviso", "Compra efetuada com sucesso!!!");
-                });                
-
-                // this.afDatabase.object("orders/" + this.order.id).set(this.order)
-                //   .then(() => {
-                //     this.alertService.showAlert("Aviso", "Compra efetuada com sucesso");
-                //     (this.afDatabase.object(`devices/${this.auth.auth.currentUser.uid}`).valueChanges() as Observable<Device>).take(1)
-                //     .subscribe(device => {      
-                //       console.log("Token: - " + device.token)                
-                //       this.sendPush(device.token);
-                //     });
-                //   });
+                  this.basketService.sendPushToDistributor(this.order, userId);
+                });
               });
 
           });
@@ -110,18 +76,12 @@ export class BasketPage {
     this.navCtrl.pop();
   }
 
-  getCurrentTimeForID(): string {
-    var date = new Date();
-    console.log(date.getUTCMilliseconds().toString());
-    return date.getUTCMilliseconds().toString();
-  }
-
   getShortOrder(order: Order, pushKey: string): Order {
     let shortOrder = {} as Order;
     shortOrder.dtOrder = order.dtOrder;
     shortOrder.status = order.status;
     shortOrder.status = order.status;
-    shortOrder.pushKey = pushKey;
+    shortOrder.id = pushKey;
 
     return shortOrder;
   }

@@ -21,6 +21,8 @@ import { AdressListServiceProvider } from '../providers/adress-list-service/adre
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 import { HttpClientModule } from '@angular/common/http';
 import { CloudMessagingProvider } from '../providers/cloud-messaging/cloud-messaging';
+import { OrderServiceProvider } from '../providers/order-service/order-service';
+import { DistributorServiceProvider } from '../providers/distributor-service/distributor-service';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { CloudMessagingProvider } from '../providers/cloud-messaging/cloud-messa
     AdressListServiceProvider,
     AlertServiceProvider,
     Firebase,
-    CloudMessagingProvider
+    CloudMessagingProvider,
+    OrderServiceProvider,
+    DistributorServiceProvider
   ]
 })
 export class AppModule {}
