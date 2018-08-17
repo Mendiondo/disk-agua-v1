@@ -1,15 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav } from 'ionic-angular';
+import { Platform } from 'ionic-angular/platform/platform';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
-import { CloudMessagingProvider } from '../providers/cloud-messaging/cloud-messaging';
+import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
+import { CloudMessagingProvider } from '../../providers/cloud-messaging/cloud-messaging';
 
 @Component({
-  templateUrl: 'app.html'
+  selector: 'menu',
+  templateUrl: 'menu.html'
 })
-export class MyApp {
+export class MenuComponent {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
@@ -24,8 +26,7 @@ export class MyApp {
     public splashScreen: SplashScreen, 
     public afAuth: AngularFireAuth,
     public userAuthService: UserAuthServiceProvider,
-    public cloudMessaging: CloudMessagingProvider) {
-    this.initializeApp();
+    public cloudMessaging: CloudMessagingProvider) {    
 
     // used for an example of ngFor and navigation
     this.pagesClient = [      
@@ -41,19 +42,6 @@ export class MyApp {
       { title: 'Pedidos', component: "OrderListPage" },
     ];
 
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      //this.statusBar.styleDefault();
-      //this.statusBar.overlaysWebView(true);
-      this.statusBar.backgroundColorByHexString('#FF6600');
-      this.splashScreen.hide();
-      this.login();      
-      
-    });
   }
 
   login() {
@@ -97,5 +85,4 @@ export class MyApp {
       this.nav.setRoot('LoginPage');
     }).catch((e) => console.error(e));
   }
-
 }
