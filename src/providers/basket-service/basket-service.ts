@@ -53,8 +53,8 @@ export class BasketServiceProvider {
   createOrder(order: Order, userId: string): Promise<any> {
     order.id = this.afDatabase.createPushId();
     return firebase.database().ref().update({                
-      [`ordersByUserId/${userId}/${order.id}`] : order,
-      [`ordersByDistId/${order.adress.distributorId1}/${order.id}`] : order
+      [`orders-by-user-id/${userId}/${order.id}`] : order,
+      [`orders-by-dist-id/${order.adress.distributorId1}/${order.id}`] : order
     })
   }
 

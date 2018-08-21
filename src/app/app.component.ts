@@ -66,7 +66,7 @@ export class MyApp {
       } else {
         console.log("Not Cordova");
         this.rootPage = "DistributorPage";
-        this.pages = this.pagesClient;
+        this.pages = this.pagesDistributor;
       }  
       if (user) {
         this.userAuthService.setUserID(user.uid);               

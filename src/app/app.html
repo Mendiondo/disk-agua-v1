@@ -7,7 +7,7 @@
     </ion-header>
 
     <ion-content>
-      <ion-list>
+      <ion-list *ngIf="rootPage != 'LoginPage'">
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
           {{p.title}}
         </button>
