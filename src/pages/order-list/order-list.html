@@ -1,16 +1,14 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>order-list</ion-title>
+    <ion-title>Pedidos em Aberto</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let order of orders">
-      {{order.status}}
+    <ion-item *ngFor="let order of orders | async">        
+        {{order.user.fullName}} - {{order.dtOrder | date: 'dd/MM/yyyy H:mm'}} - R${{order.total}}
     </ion-item>
   </ion-list>
 </ion-content>

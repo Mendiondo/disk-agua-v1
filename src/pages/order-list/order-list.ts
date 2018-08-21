@@ -3,21 +3,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Order } from '../../models/order';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
 
-/**
- * Generated class for the OrderListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
   selector: 'page-order-list',
   templateUrl: 'order-list.html',
 })
-export class OrderListPage {
-  private order: Order;
+export class OrderListPage {  
+  orders: Observable<Order[]> ;
 
   constructor(public navCtrl: NavController, 
     private afDatabase: AngularFireDatabase,
@@ -29,17 +24,11 @@ export class OrderListPage {
     console.log('ionViewDidLoad OrderListPage');
     let userId = this.auth.auth.currentUser.uid;
 
-    this.afDatabase
-      .list(`orders-by-user-id/${userId}`)
-      .query
-      .orderByChild("status")
+    this.orders = this.afDatabase.list<Order>(`orders-by-user-id/${userId}`, ref => 
+      ref.orderByChild("status")
       .equalTo("Em Aberto")
-      .once('value')
-      .then(value => {
-          this.order = value;
-          console.log(value.val());
-        }
-      )
+    ).valueChanges();
+    //https://medium.com/nycdev/create-an-angular2-ionic2-mobile-app-with-a-list-nested-detail-and-form-pattern-c03c9195dfa6    
   }
 
 }

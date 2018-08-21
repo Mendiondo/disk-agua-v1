@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, Events } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -22,6 +22,7 @@ export class LoginPage {
     public navParams: NavParams,
     public menuController : MenuController ,
     private platform: Platform,
+    public events: Events,
     private googlePlus: GooglePlus) {
     firebase.auth().languageCode = 'pt';
   }
@@ -50,6 +51,7 @@ export class LoginPage {
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then(success => {
             this.navCtrl.setRoot('ProfilePage');
+            this.events.publish('user:created', this.user, Date.now());
             console.log("Firebase success: " + JSON.stringify(success));
           }).catch(error =>
             console.log("Firebase failure: " + JSON.stringify(error))
@@ -59,8 +61,11 @@ export class LoginPage {
     } else {
       this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(auth => {
         this.navCtrl.setRoot('ProfilePage');
+        this.events.publish('user:created', this.user, Date.now());
       }).catch((e) => console.error(e));
     }
+
+    
   }
 
   loginWithFacebook() {

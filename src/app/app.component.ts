@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -17,6 +17,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   pagesClient: Array<{title: string, component: any}>;
   pagesDistributor: Array<{title: string, component: any}>;
+  isShowMenu: boolean;
 
   constructor(
     public platform: Platform, 
@@ -24,6 +25,7 @@ export class MyApp {
     public splashScreen: SplashScreen, 
     public afAuth: AngularFireAuth,
     public userAuthService: UserAuthServiceProvider,
+    public events: Events,
     public cloudMessaging: CloudMessagingProvider) {
     this.initializeApp();
 
@@ -35,12 +37,19 @@ export class MyApp {
     
     this.pagesDistributor = [
       { title: 'Cadastro', component: "ProfilePage" },
-      { title: 'Produtos', component: "ProductPage" },
+      { title: 'Produtos', component: "ProductPage" },      
       { title: 'Distribuidor', component: "DistributorPage" },
       { title: 'Endereços', component: "DistributorAdressPage" },
       { title: 'Pedidos', component: "OrderListPage" },
+      { title: 'Comprar', component: "AddProductPage" }
     ];
 
+    // app.component.ts page (listen for the user created event after function is called)
+    events.subscribe('user:created', (user, time) => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      this.isShowMenu = true;
+      console.log('Welcome', user, 'at', time);
+    });
   }
 
   initializeApp() {
@@ -69,6 +78,7 @@ export class MyApp {
         this.pages = this.pagesDistributor;
       }  
       if (user) {
+        this.isShowMenu = true;
         this.userAuthService.setUserID(user.uid);               
 
         this.cloudMessaging.listenToNotifications()
@@ -81,6 +91,7 @@ export class MyApp {
         })
       } else {
         this.rootPage = 'LoginPage';
+        this.isShowMenu = false;
       }
       authObserver.unsubscribe();        
     });
@@ -93,6 +104,7 @@ export class MyApp {
   }
 
   logout() {    
+    this.isShowMenu = false;
     this.afAuth.auth.signOut().then(auth => {
       this.nav.setRoot('LoginPage');
     }).catch((e) => console.error(e));

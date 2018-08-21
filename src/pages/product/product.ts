@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ProductPage {
   product = {} as Product;  
-  products$: Observable<Product[]>
+  products$: Observable<Product[]>;
   selectedValue: any;  
 
   constructor(public navCtrl: NavController, 

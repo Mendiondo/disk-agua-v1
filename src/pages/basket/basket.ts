@@ -49,7 +49,7 @@ export class BasketPage {
         let date = new Date();
 
         this.order.user = this.userAuthService.loadProfile(profileParam);
-        this.order.dtOrder = date.toDateString();
+        this.order.dtOrder = date.toUTCString();
         this.order.status = OrderStatus.EM_ABERTO;
 
         let fullAdress = this.distributorService.getFullAdress(this.order);
