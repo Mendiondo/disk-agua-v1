@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Product } from '../../models/product';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { Product } from '../../models/product';
 
 @IonicPage()
 @Component({

@@ -1,14 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Product } from '../../models/product';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import { Distributor } from '../../models/distributor';
 import { HttpClient } from '@angular/common/http';
-import { AngularFireModule } from 'angularfire2';
-import { FIREBASE_CONFIG } from '../../app/app.firebase.config';
+import { Component } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FIREBASE_CONFIG } from '../../app/app.firebase.config';
+import { Distributor } from '../../models/distributor';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 

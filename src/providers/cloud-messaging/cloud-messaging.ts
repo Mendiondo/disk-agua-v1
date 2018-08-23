@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 import { Firebase } from '@ionic-native/firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Platform } from 'ionic-angular';
-import { AngularFireAuth } from 'angularfire2/auth';
+import 'rxjs/add/operator/map';
 import { Device } from '../../models/device';
 
 @Injectable()

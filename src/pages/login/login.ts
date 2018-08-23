@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, Events } from 'ionic-angular';
-import { User } from '../../models/user';
+import { GooglePlus } from '@ionic-native/google-plus';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-import { Platform } from 'ionic-angular';
-import { GooglePlus } from '@ionic-native/google-plus';
-import { AddProductPage } from '../add-product/add-product';
+import { Events, IonicPage, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
+import { User } from '../../models/user';
 
 @IonicPage()
 @Component({

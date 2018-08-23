@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Product } from '../../models/product';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { Distributor } from '../../models/distributor';
 import { Adress } from '../../models/adress';
+import { Distributor } from '../../models/distributor';
 import { AdressListServiceProvider } from '../../providers/adress-list-service/adress-list-service';
-import { empty } from 'rxjs/Observer';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
-import * as firebase from 'firebase/app';
 
 
 @IonicPage()

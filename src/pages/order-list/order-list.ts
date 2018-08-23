@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Order } from '../../models/order';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { Order } from '../../models/order';
 import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
 
 

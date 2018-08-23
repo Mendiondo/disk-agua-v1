@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { BasketServiceProvider } from '../../providers/basket-service/basket-service';
-import { Product } from '../../models/product';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Order } from '../../models/order';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
-import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Order } from '../../models/order';
 import { OrderStatus } from '../../models/order-status';
+import { Product } from '../../models/product';
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
+import { BasketServiceProvider } from '../../providers/basket-service/basket-service';
 import { DistributorServiceProvider } from '../../providers/distributor-service/distributor-service';
+import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
 
 
 @IonicPage()

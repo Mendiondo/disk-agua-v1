@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Product } from '../../models/product';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { BasketServiceProvider } from '../../providers/basket-service/basket-service';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { Product } from '../../models/product';
+import { BasketServiceProvider } from '../../providers/basket-service/basket-service';
 
 @IonicPage()
 @Component({

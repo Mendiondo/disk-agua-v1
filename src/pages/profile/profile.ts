@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Profile } from '../../models/profile';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
+import { Profile } from '../../models/profile';
 import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
 
 // declare var google: any;
