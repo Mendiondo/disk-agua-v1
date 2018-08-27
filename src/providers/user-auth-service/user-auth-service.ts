@@ -1,23 +1,23 @@
-import { Injectable, ViewChild } from '@angular/core';
-import { Profile } from '../../models/profile';
-import { Distributor } from '../../models/distributor';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { CloudMessagingProvider } from '../cloud-messaging/cloud-messaging';
-import { NavController, Nav } from 'ionic-angular';
 import { Platform } from 'ionic-angular/platform/platform';
-import { MyApp } from '../../app/app.component';
+import { Profile } from '../../models/profile';
+import { CloudMessagingProvider } from '../cloud-messaging/cloud-messaging';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class UserAuthServiceProvider {
   //@ViewChild(Nav) nav: Nav;
 
   uid: string;
+  role: string;
   tokenPushNotification: string;
 
   constructor(public afAuth: AngularFireAuth,
     public platform: Platform,
     //public navCtrl: NavController,
     // public myApp: MyApp,
+    private afDatabase: AngularFireDatabase,
     public cloudMessaging: CloudMessagingProvider) { }
 
   setUserID(uid: string) {
@@ -26,6 +26,10 @@ export class UserAuthServiceProvider {
   
   getUserID(): string {
     return this.uid;
+  }
+  
+  setUserRole(uid: string) {
+    this.afDatabase.object("distributor").valueChanges().take(1).subscribe();
   }
   
   setUserTokenPushNotification(tokenPushNotification: string) {

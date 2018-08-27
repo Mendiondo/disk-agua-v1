@@ -1,28 +1,28 @@
-import { TooltipsModule } from 'ionic-tooltips';
+import { HttpClientModule } from '@angular/common/http';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ErrorHandler, NgModule, LOCALE_ID } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { AngularFireModule } from 'angularfire2'
-import { AngularFireAuthModule } from 'angularfire2/auth'
-// import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated'
-import { AngularFireDatabaseModule } from 'angularfire2/database'
-import { GooglePlus } from '@ionic-native/google-plus';
-
-import { MyApp } from './app.component';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { Firebase } from '@ionic-native/firebase';
-import { FIREBASE_CONFIG } from './app.firebase.config';
-import { BasketServiceProvider } from '../providers/basket-service/basket-service';
-import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { TooltipsModule } from 'ionic-tooltips';
+import { ComponentsModule } from '../components/components.module';
 import { AdressListServiceProvider } from '../providers/adress-list-service/adress-list-service';
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
-import { HttpClientModule } from '@angular/common/http';
+import { BasketServiceProvider } from '../providers/basket-service/basket-service';
 import { CloudMessagingProvider } from '../providers/cloud-messaging/cloud-messaging';
-import { OrderServiceProvider } from '../providers/order-service/order-service';
 import { DistributorServiceProvider } from '../providers/distributor-service/distributor-service';
+import { OrderServiceProvider } from '../providers/order-service/order-service';
+import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
+import { MyApp } from './app.component';
+import { FIREBASE_CONFIG } from './app.firebase.config';
+
+
 
 @NgModule({
   declarations: [
@@ -36,7 +36,8 @@ import { DistributorServiceProvider } from '../providers/distributor-service/dis
     AngularFireDatabaseModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    TooltipsModule
+    TooltipsModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

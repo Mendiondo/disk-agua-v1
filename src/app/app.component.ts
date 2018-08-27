@@ -40,7 +40,7 @@ export class MyApp {
       { title: 'Produtos', component: "ProductPage" },      
       { title: 'Distribuidor', component: "DistributorPage" },
       { title: 'Endereços', component: "DistributorAdressPage" },
-      { title: 'Pedidos', component: "OrderListPage" },
+      { title: 'Pedidos', component: "OrderListPage" },      
       { title: 'Comprar', component: "AddProductPage" }
     ];
 

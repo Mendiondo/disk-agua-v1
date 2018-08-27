@@ -13,6 +13,7 @@ import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-
 })
 export class OrderListPage {  
   orders: Observable<Order[]> ;
+  orderSelected: Order;
 
   constructor(public navCtrl: NavController, 
     private afDatabase: AngularFireDatabase,
@@ -31,6 +32,7 @@ export class OrderListPage {
   }
 
   onSelect(order) {
+    this.orderSelected = order;
     this.navCtrl.push('OrderDetailPage', { orderSelected: order });
   }
 
