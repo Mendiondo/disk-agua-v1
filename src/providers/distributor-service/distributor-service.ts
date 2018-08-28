@@ -19,6 +19,10 @@ export class DistributorServiceProvider {
   distributorById(fullAdress: string, adress: Adress): Observable<Distributor> {
     return (this.afDatabase.object(`distributor-by-id/${adress.distributorId1}/${fullAdress}`).valueChanges() as Observable<Distributor>).take(1)
   }
+  
+  getDistributor(uid: string): Observable<Distributor> {
+    return (this.afDatabase.object(`distributor/${uid}`).valueChanges() as Observable<Distributor>).take(1)
+  }
 
   getFullAdress(order: Order) {
     return order.user.street + "_" + order.user.district + "_" + order.user.city;

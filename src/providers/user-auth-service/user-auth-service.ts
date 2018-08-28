@@ -4,12 +4,19 @@ import { Platform } from 'ionic-angular/platform/platform';
 import { Profile } from '../../models/profile';
 import { CloudMessagingProvider } from '../cloud-messaging/cloud-messaging';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Distributor } from '../../models/distributor';
+import { Adress } from '../../models/adress';
+import { Observable } from 'rxjs/Observable';
+import { DistributorServiceProvider } from '../distributor-service/distributor-service';
+import { Roles } from '../../models/roles';
 
 @Injectable()
 export class UserAuthServiceProvider {
   //@ViewChild(Nav) nav: Nav;
 
   uid: string;
+  client: Profile;
+  distributor: Distributor;
   role: string;
   tokenPushNotification: string;
 
@@ -18,6 +25,7 @@ export class UserAuthServiceProvider {
     //public navCtrl: NavController,
     // public myApp: MyApp,
     private afDatabase: AngularFireDatabase,
+    private distributorService: DistributorServiceProvider,
     public cloudMessaging: CloudMessagingProvider) { }
 
   setUserID(uid: string) {
@@ -29,7 +37,27 @@ export class UserAuthServiceProvider {
   }
   
   setUserRole(uid: string) {
-    this.afDatabase.object("distributor").valueChanges().take(1).subscribe();
+  }
+  
+  loadUser(uid: string) {
+    this.getClientById(uid).subscribe(client => {
+      console.log("Aqui");
+      if (client) {
+        this.client = client;
+        this.role = Roles.CLIENT;
+        console.log(client);
+      } else {
+        this.distributorService.getDistributor(uid).subscribe(distributor => {
+          this.distributor = distributor;
+          this.role = Roles.DISTRIBUTOR;
+          console.log(distributor);
+        })
+      }
+    });
+  }
+
+  getClientById(uid: string): Observable<Profile> {
+    return this.afDatabase.object(`client/${uid}`).valueChanges() as Observable<Profile>
   }
   
   setUserTokenPushNotification(tokenPushNotification: string) {
