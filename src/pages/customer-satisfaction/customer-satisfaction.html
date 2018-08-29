@@ -6,7 +6,11 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-label color="primary" floating>Qual opinião sobre App Disk Água Santa Catarina?</ion-label>
+    <ion-label color="primary" floating>Qual opinião sobre App?</ion-label>
+    <ion-input type="text" [(ngModel)]="userSatisfaction.opinion" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>O que poderia melhorar?</ion-label>
     <ion-input type="text" [(ngModel)]="userSatisfaction.opinion" ></ion-input>
   </ion-item>
 </ion-content>

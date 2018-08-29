@@ -36,20 +36,42 @@ export class UserAuthServiceProvider {
     return this.uid;
   }
   
-  setUserRole(uid: string) {
+  setClient(client: Profile) {
+    this.client = client;
+  }
+
+  getClient(): Profile {
+    return this.client;
+  }
+  
+  setDistributor(distributor: Distributor) {
+    this.distributor = distributor;
+  }
+
+  getDistributor(): Distributor {
+    return this.distributor;
+  }
+
+  setUserRole(role: string) {
+    this.role = role;
+  }
+
+  getUserRole(): string {
+    return this.role;
   }
   
   loadUser(uid: string) {
+    this.setUserID(uid); 
     this.getClientById(uid).subscribe(client => {
       console.log("Aqui");
       if (client) {
         this.client = client;
-        this.role = Roles.CLIENT;
+        this.setUserRole(Roles.CLIENT);
         console.log(client);
       } else {
         this.distributorService.getDistributor(uid).subscribe(distributor => {
           this.distributor = distributor;
-          this.role = Roles.DISTRIBUTOR;
+          this.setUserRole(Roles.DISTRIBUTOR);
           console.log(distributor);
         })
       }
@@ -57,7 +79,7 @@ export class UserAuthServiceProvider {
   }
 
   getClientById(uid: string): Observable<Profile> {
-    return this.afDatabase.object(`client/${uid}`).valueChanges() as Observable<Profile>
+    return this.afDatabase.object(`client/${uid}`).valueChanges().take(1) as Observable<Profile>
   }
   
   setUserTokenPushNotification(tokenPushNotification: string) {

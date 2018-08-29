@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserAuthServiceProvider } from '../providers/user-auth-service/user-auth-service';
 import { CloudMessagingProvider } from '../providers/cloud-messaging/cloud-messaging';
+import { Roles } from '../models/roles';
+import { DistributorServiceProvider } from '../providers/distributor-service/distributor-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,6 +19,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   pagesClient: Array<{title: string, component: any}>;
   pagesDistributor: Array<{title: string, component: any}>;
+  pagesAdmin: Array<{title: string, component: any}>;
   isShowMenu: boolean;
 
   constructor(
@@ -26,22 +29,26 @@ export class MyApp {
     public afAuth: AngularFireAuth,
     public userAuthService: UserAuthServiceProvider,
     public events: Events,
+    private distributorService: DistributorServiceProvider,
     public cloudMessaging: CloudMessagingProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pagesClient = [      
       { title: 'Cadastro', component: "ProfilePage" },
-      { title: 'Comprar', component: "AddProductPage" }
+      { title: 'Comprar', component: "AddProductPage" },
+      { title: 'Dê sua opnião', component: "CustomerSatisfactionPage" }
     ];
     
     this.pagesDistributor = [
       { title: 'Cadastro', component: "ProfilePage" },
-      { title: 'Produtos', component: "ProductPage" },      
+      { title: 'Pedidos', component: "OrderListPage" }
+    ];
+
+    this.pagesAdmin = [
+      { title: 'Produtos', component: "ProductPage" },
       { title: 'Distribuidor', component: "DistributorPage" },
-      { title: 'Endereços', component: "DistributorAdressPage" },
-      { title: 'Pedidos', component: "OrderListPage" },      
-      { title: 'Comprar', component: "AddProductPage" }
+      { title: 'Endereços', component: "DistributorAdressPage" }      
     ];
 
     // app.component.ts page (listen for the user created event after function is called)
@@ -68,18 +75,14 @@ export class MyApp {
   login() {
     const authObserver = this.afAuth.authState.subscribe( user => {
       if(this.platform.is('cordova')) {
-        console.log("Cordova");
-        this.rootPage = "AddProductPage";
-        this.pages = this.pagesClient;
+        console.log("Cordova");        
         this.cloudMessaging.getToken(user.uid);
       } else {
-        console.log("Not Cordova");
-        this.rootPage = "DistributorPage";
-        this.pages = this.pagesDistributor;
+        console.log("Not Cordova");        
       }  
       if (user) {
         this.isShowMenu = true;
-        this.userAuthService.setUserID(user.uid);               
+        this.loadUser(user.uid);
 
         this.cloudMessaging.listenToNotifications()
         .subscribe((res) => {
@@ -94,6 +97,28 @@ export class MyApp {
         this.isShowMenu = false;
       }
       authObserver.unsubscribe();        
+    });
+  }
+
+  loadUser(uid: string) {
+    this.userAuthService.setUserID(uid);
+    this.userAuthService.getClientById(uid).subscribe(client => {
+      console.log("Aqui");
+      if (client) {
+        this.userAuthService.setClient(client);
+        this.userAuthService.setUserRole(Roles.CLIENT);
+        this.rootPage = "AddProductPage";
+        this.pages = this.pagesClient;
+        console.log(client);
+      } else {
+        this.distributorService.getDistributor(uid).subscribe(distributor => {
+          this.userAuthService.setDistributor(distributor);
+          this.userAuthService.setUserRole(Roles.DISTRIBUTOR);
+          this.rootPage = "OrderListPage";
+          this.pages = this.pagesDistributor;
+          console.log(distributor);
+        })
+      }
     });
   }
 

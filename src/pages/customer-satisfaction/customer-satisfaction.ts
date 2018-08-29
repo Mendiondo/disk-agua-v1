@@ -8,8 +8,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
   selector: 'page-customer-satisfaction',
   templateUrl: 'customer-satisfaction.html',
 })
-export class CustomerSatisfactionPage {
-  userSatisfaction: UserSatisfaction;
+export class CustomerSatisfactionPage {  
+  userSatisfaction = {} as UserSatisfaction;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase) {
   }
