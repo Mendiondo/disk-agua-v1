@@ -56,6 +56,9 @@ export class MyApp {
       // user and time are the same arguments passed in `events.publish(user, time)`
       this.isShowMenu = true;
       console.log('Welcome', user, 'at', time);
+      const authObserver = this.afAuth.authState.subscribe( userAuth => {
+        this.loadUser(userAuth.uid, userAuth.email);
+      });
     });
   }
 
@@ -82,16 +85,18 @@ export class MyApp {
       }  
       if (user) {
         this.isShowMenu = true;
-        this.loadUser(user.uid);
+        this.loadUser(user.uid, user.email);
 
-        this.cloudMessaging.listenToNotifications()
-        .subscribe((res) => {
-            if (res.tap) {
-              // since firebase sends always string as data you have to parse it
-              let data = JSON.parse(res.data)              
-              console.log(data);
-            }
-        })
+        if(this.platform.is('cordova')) {          
+          this.cloudMessaging.listenToNotifications()
+          .subscribe((res) => {
+              if (res.tap) {
+                // since firebase sends always string as data you have to parse it
+                let data = JSON.parse(res.data)              
+                console.log(data);
+              }
+          })
+        }
       } else {
         this.rootPage = 'LoginPage';
         this.isShowMenu = false;
@@ -100,11 +105,16 @@ export class MyApp {
     });
   }
 
-  loadUser(uid: string) {
+  loadUser(uid: string, email: string) {
     this.userAuthService.setUserID(uid);
     this.userAuthService.getClientById(uid).subscribe(client => {
       console.log("Aqui");
-      if (client) {
+      if (email === 'slawrows@gmail.com') {        
+        this.userAuthService.setUserRole(Roles.ADMIN);
+        this.rootPage = "DistributorAdressPage";
+        this.pages = this.pagesAdmin;
+        console.log("Admin");
+      } else if (client) {
         this.userAuthService.setClient(client);
         this.userAuthService.setUserRole(Roles.CLIENT);
         this.rootPage = "AddProductPage";

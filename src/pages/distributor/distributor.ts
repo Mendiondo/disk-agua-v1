@@ -31,6 +31,7 @@ export class DistributorPage {
     let secondaryApp = firebase.initializeApp(FIREBASE_CONFIG, "Secondary");
 
     let pass = this.generateRandomToken(6);
+    this.distributor.pass = pass;
     secondaryApp.auth().createUserWithEmailAndPassword(this.distributor.email, pass).then(
       user => {
         this.distributor.id = user.uid;

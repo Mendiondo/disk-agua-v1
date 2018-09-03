@@ -25,7 +25,7 @@ export class OrderListPage {
     console.log('ionViewDidLoad OrderListPage');
     let userId = this.userAuthService.getUserID();
 
-    this.orders = this.afDatabase.list<Order>(`orders-by-user-id/${userId}`, ref => 
+    this.orders = this.afDatabase.list<Order>(`orders-by-dist-id/${userId}`, ref => 
       ref.orderByChild("status")
       .equalTo("Em Aberto")
     ).valueChanges();

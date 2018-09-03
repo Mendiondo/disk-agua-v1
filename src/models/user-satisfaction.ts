@@ -1,4 +1,7 @@
 export interface UserSatisfaction {
-    opinion: string;
+    id: string;
+    userId: string;
+    dsOpinion: string;
+    dsInprove: string;
     dtCreated: string;
 }
