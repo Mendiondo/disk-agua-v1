@@ -1,14 +1,11 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AdressSearchFieldComponent } from './adress-search-field/adress-search-field';
-import { MenuComponent } from './menu/menu';
 @NgModule({
-	declarations: [AdressSearchFieldComponent,
-    MenuComponent],
+	declarations: [AdressSearchFieldComponent],
 	schemas: [
 		CUSTOM_ELEMENTS_SCHEMA
 	],
 	imports: [],
-	exports: [AdressSearchFieldComponent,
-    MenuComponent]
+	exports: [AdressSearchFieldComponent]
 })
 export class ComponentsModule {}
