@@ -20,7 +20,12 @@
           <h2 class="itemLeft">Total</h2>
           <h2 class="itemRight">{{order.total}}</h2>          
         </ion-item>        
-      </ion-list>      
+        <ion-item>
+          <h2 class="itemLeft">Produtos</h2>
+          <ion-item *ngFor="let product of order.products">{{product.amount}}x {{product.name}}</ion-item>
+        </ion-item>
+      </ion-list>
+
     </form>
   </div>
 </ion-content>
