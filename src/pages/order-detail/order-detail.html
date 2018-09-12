@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>order-detail</ion-title>
+    <ion-title>Pedido em Aberto</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -25,7 +25,9 @@
           <ion-item *ngFor="let product of order.products">{{product.amount}}x {{product.name}}</ion-item>
         </ion-item>
       </ion-list>
-
+      <button ion-button clear [round]="true" >Chat</button>
+      <button ion-button clear [round]="true" [outline]="true" >Prazo de Entrega</button>
+      <button ion-button clear [round]="true" [outline]="true" >Finalizar Pedido</button>
     </form>
   </div>
 </ion-content>

@@ -54,3 +54,12 @@
     color: #f53d3d;
     text-align: center;
 }
+
+.button-clear-md {
+    color: white;
+    background-color: #FF6600;
+}
+
+.button-clear-md:hover:not(.disable-hover) {
+    color: #FF6600;
+}

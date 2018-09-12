@@ -1,17 +1,20 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>customer-satisfaction</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Dê sua Opnião</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-item>
     <ion-label color="primary" floating>Qual opinião sobre App?</ion-label>
-    <ion-input type="text" [(ngModel)]="userSatisfaction.dsOpinion" ></ion-input>
+    <ion-input type="text" [(ngModel)]="userSatisfaction.dsOpinion"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label color="primary" floating>O que poderia melhorar?</ion-label>
-    <ion-input type="text" [(ngModel)]="userSatisfaction.dsInprove" ></ion-input>
-  </ion-item>  
+    <ion-input type="text" [(ngModel)]="userSatisfaction.dsInprove"></ion-input>
+  </ion-item>
   <button ion-button clear block (click)="save()">Salvar</button>
 </ion-content>
