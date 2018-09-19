@@ -11,7 +11,7 @@
     <ion-item class="distributor-field">
       <ion-label floating>Distribuidor</ion-label>
       <ion-select [(ngModel)]="selectedValue" interface="popover" (ionChange)="selectDistributor()">
-        <ion-option *ngFor="let distributor of distributors$ | async" [value]="distributor">{{distributor.name}}</ion-option>
+        <ion-option *ngFor="let distributor of distributors$ | async" [value]="distributor">{{distributor.fullName}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-card>

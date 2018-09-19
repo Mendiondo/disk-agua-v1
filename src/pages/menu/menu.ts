@@ -93,7 +93,7 @@ export class MenuPage {
 
   loadUser(uid: string, email: string) {
     this.userAuthService.setUserID(uid);
-    this.userAuthService.getClientById(uid).subscribe(client => {
+    this.userAuthService.getProfileById(uid).subscribe(client => {
       console.log("Aqui");
       if (email === 'slawrows@gmail.com') {        
         this.userAuthService.setUserRole(Roles.ADMIN);

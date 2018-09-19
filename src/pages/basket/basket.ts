@@ -44,7 +44,7 @@ export class BasketPage {
 
   checkout() {
     let userId = this.auth.auth.currentUser.uid;
-    this.afDatabase.object(`client/${userId}`).valueChanges().take(1)
+    this.afDatabase.object(`profile/${userId}`).valueChanges().take(1)
       .subscribe(profileParam => {
         let date = new Date();
 

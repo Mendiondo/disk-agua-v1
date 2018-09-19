@@ -37,6 +37,7 @@ export class LoginPage {
   async login(user: User) {
     this.auth.auth.signInWithEmailAndPassword(user.email, user.password).then(auth => {
       this.navCtrl.setRoot('ProfilePage');
+      this.events.publish('user:created', this.user, Date.now());
     }).catch((e) => console.error(e));
   }
 
@@ -61,9 +62,7 @@ export class LoginPage {
         this.navCtrl.setRoot('ProfilePage');
         this.events.publish('user:created', this.user, Date.now());
       }).catch((e) => console.error(e));
-    }
-
-    
+    }    
   }
 
   loginWithFacebook() {

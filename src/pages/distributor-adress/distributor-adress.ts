@@ -7,6 +7,8 @@ import { Adress } from '../../models/adress';
 import { Distributor } from '../../models/distributor';
 import { AdressListServiceProvider } from '../../providers/adress-list-service/adress-list-service';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
+import { Profile } from '../../models/profile';
+import { Roles } from '../../models/roles';
 
 
 @IonicPage()
@@ -16,8 +18,8 @@ import { AlertServiceProvider } from '../../providers/alert-service/alert-servic
 })
 export class DistributorAdressPage {
 
-  distributor = {} as Distributor;
-  distributors$: Observable<Distributor[]>;
+  distributor = {} as Profile;
+  distributors$: Observable<Profile[]>;
   selectedValue: any;
   adress = {} as Adress;
   adressList: Adress[];
@@ -31,7 +33,6 @@ export class DistributorAdressPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private afDatabase: AngularFireDatabase,
-    private auth: AngularFireAuth,
     private adressService: AdressListServiceProvider,
     private alertService: AlertServiceProvider) {
   }
@@ -44,20 +45,15 @@ export class DistributorAdressPage {
   }
   
   loadDistributor() {
-    this.distributors$ = this.afDatabase
-    .list<Distributor>(`distributor`)
-    .snapshotChanges()      
-    .map(changes => {
-      return changes.map( c => ({
-        key: c.payload.key, ...c.payload.val()
-      }))
-    }
-  );
-}
+    this.distributors$ = this.afDatabase.list<Profile>(`profile`, ref => 
+      ref.orderByChild("role")
+      .equalTo(Roles.DISTRIBUTOR)
+    ).valueChanges();
+  }
 
 loadAdressList() {
   this.adressListObservable = this.afDatabase
-  .list<Distributor>(`distributor-by-id/${this.distributor.id}`)
+  .list<Distributor>(`distributor-by-id/${this.distributor.distributorId}`)
   .snapshotChanges()      
   .map(changes => {
     return changes.map( c => ({
@@ -83,23 +79,7 @@ selectDistributor() {
     this.adress.adressId = adressData.id;
   }
 
-  save(adress: Adress) {
-    // let items: AngularFireList<Adress[]>;
-    // items = this.afDatabase.list(`distribuidor-adress/${this.distributor.id}`);
-    // items.push(this.adressList);
-    
-    // this.afDatabase.object(`distribuidor-adress/${this.distributor.id}`).set(this.adress)
-    // .then(() => this.alertService.showAlert("Aviso", "Distribuidor salvo com sucesso"));    
-    //.then(() => this.navCtrl.setRoot("DistributorPage"));
-
-    // firebase.database().ref(`distribuidor-adress`).child(`${this.distributor.id}`).once("value", function(snapshot) {
-    //   if (snapshot.exists()) {
-    //     console.log(snapshot.val);
-    //   } else {
-    //     console.log("Username is not in use");
-    //   }
-    // });
-    
+  save(adress: Adress) {    
     if (!this.validateAdress(adress)) {
       return;
     }
@@ -126,8 +106,8 @@ selectDistributor() {
   }
 
   saveAdress(adress: Adress) {
-    this.adress[`distributorId${adress.level}`] = this.distributor.id;
-    this.afDatabase.object(`distributor-by-id/${this.distributor.id}/${this.adress.fullAdress}`)
+    this.adress[`distributorId${adress.level}`] = this.distributor.distributorId;
+    this.afDatabase.object(`distributor-by-id/${this.distributor.distributorId}/${this.adress.fullAdress}`)
     .set(this.adress);
 
     this.afDatabase.object(`distributor-by-adress/${this.adress.fullAdress}`)
@@ -189,7 +169,7 @@ selectDistributor() {
       this.adressList.splice(index, 1);
     }
     
-    this.afDatabase.object(`distributor-by-id/${this.distributor.id}/${adress.fullAdress}`).remove();  
+    this.afDatabase.object(`distributor-by-id/${this.distributor.distributorId}/${adress.fullAdress}`).remove();  
     //TODO remover somente o id e se nao ficou sem id remove o registro
     this.adress[`distributorId${adress.level}`] = "";
     console.log("1 " + adress['distributorId1']);

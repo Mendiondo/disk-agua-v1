@@ -7,4 +7,8 @@ export interface Profile {
     additionalAdress: string;
     adressId: string;
     email: string;
+    role: string;
+    pass: string;
+    cel: string;
+    distributorId: string;
 }

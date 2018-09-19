@@ -7,6 +7,7 @@ import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
 import { Profile } from '../../models/profile';
 import { UserAuthServiceProvider } from '../../providers/user-auth-service/user-auth-service';
+import { Roles } from '../../models/roles';
 
 // declare var google: any;
 
@@ -38,30 +39,34 @@ export class ProfilePage implements OnInit {
     placedetails: any;
 
     constructor(private auth: AngularFireAuth,
-        private afDatabase: AngularFireDatabase,        
+        private afDatabase: AngularFireDatabase,
         public navCtrl: NavController,
         public navParams: NavParams,
-        public userAuthServiceProvider: UserAuthServiceProvider,
+        public userAuthService: UserAuthServiceProvider,
         public modalCtrl: ModalController) {
     }
 
     ionViewWillLoad() {
-        this.afDatabase.object(`client/${this.auth.auth.currentUser.uid}`).valueChanges().take(1)
-        .subscribe(profileParam => {            
-            if (profileParam != null && profileParam['email']) {
-                this.profile = this.userAuthServiceProvider.loadProfile(profileParam);
-                console.log("1  " + profileParam);
+        this.userAuthService.getProfileById(this.auth.auth.currentUser.uid).subscribe(profile => {
+            // if (profileParam != null && profileParam['email']) {
+            // this.profile = this.userAuthServiceProvider.loadProfile(profileParam);
+            if (profile && profile.email) {
+                this.profile = profile;
             } else {
+                this.profile = {} as Profile;
                 this.profile.email = this.auth.auth.currentUser.email;
-                console.log("2  " + profileParam);
             }
         });
     }
 
     createProfile() {
         this.auth.authState.take(1).subscribe(auth => {
-            this.afDatabase.object(`client/${auth.uid}`).set(this.profile)
-                .then(() => this.navCtrl.setRoot("AddProductPage"))
+            this.profile.role = Roles.CLIENT;
+            this.afDatabase.object(`profile/${auth.uid}`)
+                .set(this.profile)
+                .then(() => {                    
+                    this.navCtrl.setRoot("AddProductPage");
+                })
         })
     }
 

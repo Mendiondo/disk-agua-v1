@@ -10,20 +10,20 @@
 <ion-content padding>
   <ion-item>
     <ion-label floating>Nome do Distribuidor</ion-label>
-    <ion-input [(ngModel)]="distributor.name"></ion-input>
+    <ion-input [(ngModel)]="profile.fullName"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Email</ion-label>
-    <ion-input type="email" #email="ngModel" [(ngModel)]="distributor.email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"></ion-input>
+    <ion-input type="email" #email="ngModel" [(ngModel)]="profile.email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"></ion-input>
   </ion-item>
   <div *ngIf="email.invalid" class="invalid-field">Email inválido</div>
   <ion-item>
     <ion-label floating>Telefone</ion-label>
-    <ion-input [(ngModel)]="distributor.phone"></ion-input>
+    <ion-input [(ngModel)]="profile.phone"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Celular</ion-label>
-    <ion-input [(ngModel)]="distributor.cel"></ion-input>
+    <ion-input [(ngModel)]="profile.cel"></ion-input>
   </ion-item>  
   <button ion-button clear block (click)="save()">Salvar</button>
 </ion-content>

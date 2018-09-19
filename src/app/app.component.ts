@@ -44,8 +44,9 @@ export class MyApp {
       { title: 'Cadastro', component: "ProfilePage" },
       { title: 'Pedidos', component: "OrderListPage" }
     ];
-
+    
     this.pagesAdmin = [
+      { title: 'Cadastro', component: "ProfilePage" },
       { title: 'Produtos', component: "ProductPage" },
       { title: 'Distribuidor', component: "DistributorPage" },
       { title: 'Endereços', component: "DistributorAdressPage" }      
@@ -101,32 +102,34 @@ export class MyApp {
         this.rootPage = 'LoginPage';
         this.isShowMenu = false;
       }
-      authObserver.unsubscribe();        
+      authObserver.unsubscribe();
     });
   }
 
   loadUser(uid: string, email: string) {
     this.userAuthService.setUserID(uid);
-    this.userAuthService.getClientById(uid).subscribe(client => {
-      console.log("Aqui");
-      if (email === 'slawrows@gmail.com') {        
+    this.userAuthService.getProfileById(uid).subscribe(profile => {
+      if (profile == null || profile.role == null) {
+        this.rootPage = "ProfilePage";
+        console.log("No roles!!!");
+      } else if (profile.role == Roles.ADMIN) {        
         this.userAuthService.setUserRole(Roles.ADMIN);
         this.rootPage = "DistributorAdressPage";
         this.pages = this.pagesAdmin;
         console.log("Admin");
-      } else if (client) {
-        this.userAuthService.setClient(client);
+      } else if (profile.role == Roles.CLIENT) {
+        this.userAuthService.setClient(profile);
         this.userAuthService.setUserRole(Roles.CLIENT);
         this.rootPage = "AddProductPage";
         this.pages = this.pagesClient;
-        console.log(client);
-      } else {
+        console.log("Client");
+      } else if (profile.role == Roles.DISTRIBUTOR) {
         this.distributorService.getDistributor(uid).subscribe(distributor => {
           this.userAuthService.setDistributor(distributor);
           this.userAuthService.setUserRole(Roles.DISTRIBUTOR);
           this.rootPage = "OrderListPage";
           this.pages = this.pagesDistributor;
-          console.log(distributor);
+          console.log("Dist");
         })
       }
     });

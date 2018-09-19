@@ -62,7 +62,7 @@ export class UserAuthServiceProvider {
   
   loadUser(uid: string) {
     this.setUserID(uid); 
-    this.getClientById(uid).subscribe(client => {
+    this.getProfileById(uid).subscribe(client => {
       console.log("Aqui");
       if (client) {
         this.client = client;
@@ -78,8 +78,8 @@ export class UserAuthServiceProvider {
     });
   }
 
-  getClientById(uid: string): Observable<Profile> {
-    return this.afDatabase.object(`client/${uid}`).valueChanges().take(1) as Observable<Profile>
+  getProfileById(uid: string): Observable<Profile> {
+    return this.afDatabase.object(`profile/${uid}`).valueChanges().take(1) as Observable<Profile>
   }
   
   setUserTokenPushNotification(tokenPushNotification: string) {
