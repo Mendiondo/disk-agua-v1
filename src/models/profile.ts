@@ -1,4 +1,6 @@
 export interface Profile {
+    userid: string;
+    distributorId: string;
     fullName: string;
     street: string;
     district: string;
@@ -10,5 +12,4 @@ export interface Profile {
     role: string;
     pass: string;
     cel: string;
-    distributorId: string;
 }

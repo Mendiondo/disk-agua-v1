@@ -35,10 +35,12 @@ export class LoginPage {
    }
 
   async login(user: User) {
-    this.auth.auth.signInWithEmailAndPassword(user.email, user.password).then(auth => {
-      this.navCtrl.setRoot('ProfilePage');
-      this.events.publish('user:created', this.user, Date.now());
-    }).catch((e) => console.error(e));
+    if (user.email && user.password) {
+      this.auth.auth.signInWithEmailAndPassword(user.email, user.password).then(auth => {
+        this.navCtrl.setRoot('ProfilePage');
+        this.events.publish('user:created', this.user, Date.now());
+      }).catch((e) => console.error(e));
+    }
   }
 
   loginWithGoogle() {

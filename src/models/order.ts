@@ -11,5 +11,7 @@ export interface Order {
     adress: Adress;
     distributor: Distributor;
     dtOrder: string;
-    status:  string;   
+    dtDelivery: string;
+    status:  string;
+    distributorAdressLevel: number;
 }

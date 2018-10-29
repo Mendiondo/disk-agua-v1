@@ -101,19 +101,16 @@ export class MenuPage {
         this.pages = this.pagesAdmin;
         console.log("Admin");
       } else if (client) {
-        this.userAuthService.setClient(client);
+        this.userAuthService.setProfile(client);
         this.userAuthService.setUserRole(Roles.CLIENT);
         this.appCtrl.getRootNav().rootPage = "AddProductPage";
         this.pages = this.pagesClient;
         console.log(client);
-      } else {
-        this.distributorService.getDistributor(uid).subscribe(distributor => {
-          this.userAuthService.setDistributor(distributor);
+      } else {       
+          this.userAuthService.setProfile(client);          
           this.userAuthService.setUserRole(Roles.DISTRIBUTOR);
           this.appCtrl.getRootNav().rootPage = "OrderListPage";
-          this.pages = this.pagesDistributor;
-          console.log(distributor);
-        })
+          this.pages = this.pagesDistributor;       
       }
     });
   }

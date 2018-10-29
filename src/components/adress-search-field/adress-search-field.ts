@@ -1,8 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import { Distributor } from '../../models/distributor';
+import { NavController, NavParams } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 
 @Component({
@@ -22,8 +19,7 @@ export class AdressSearchFieldComponent {
   placedetails: any;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    private afDatabase: AngularFireDatabase,
+    public navParams: NavParams,    
     public modalCtrl: ModalController ) {
   }
 

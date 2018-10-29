@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,9 @@ export class RegisterPage {
   user = {} as User;
 
   constructor(private auth: AngularFireAuth,
-    public navCtrl: NavController, public navParams: NavParams) {
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private alertService: AlertServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -22,11 +25,21 @@ export class RegisterPage {
 
   async register(user: User) {
     try {
-      const result = await this.auth.auth.createUserWithEmailAndPassword(user.email, user.password);
+      const result = await this.auth.auth.createUserWithEmailAndPassword(user.email, user.password).then(()=>{
+        this.alertService.showAlert("Aviso", "Cadastro realizado com sucesso!!!");
+        this.navCtrl.setRoot('LoginPage');
+      }).catch(()=>{
+        this.redirectErrorOnRegister();
+      })
       console.log(result);
     } catch (e) {
-      console.error(e);
+      this.redirectErrorOnRegister();      
     }
+  }
+  
+  redirectErrorOnRegister() {
+    this.alertService.showAlert("Aviso", "Falha ao realizar o cadastro");
+    this.navCtrl.setRoot('LoginPage');    
   }
 
   backToLogin() {

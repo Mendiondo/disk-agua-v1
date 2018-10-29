@@ -15,8 +15,7 @@ export class UserAuthServiceProvider {
   //@ViewChild(Nav) nav: Nav;
 
   uid: string;
-  client: Profile;
-  distributor: Distributor;
+  profile: Profile;
   role: string;
   tokenPushNotification: string;
 
@@ -36,20 +35,12 @@ export class UserAuthServiceProvider {
     return this.uid;
   }
   
-  setClient(client: Profile) {
-    this.client = client;
+  setProfile(client: Profile) {
+    this.profile = client;
   }
 
-  getClient(): Profile {
-    return this.client;
-  }
-  
-  setDistributor(distributor: Distributor) {
-    this.distributor = distributor;
-  }
-
-  getDistributor(): Distributor {
-    return this.distributor;
+  getProfile(): Profile {
+    return this.profile;
   }
 
   setUserRole(role: string) {
@@ -58,24 +49,6 @@ export class UserAuthServiceProvider {
 
   getUserRole(): string {
     return this.role;
-  }
-  
-  loadUser(uid: string) {
-    this.setUserID(uid); 
-    this.getProfileById(uid).subscribe(client => {
-      console.log("Aqui");
-      if (client) {
-        this.client = client;
-        this.setUserRole(Roles.CLIENT);
-        console.log(client);
-      } else {
-        this.distributorService.getDistributor(uid).subscribe(distributor => {
-          this.distributor = distributor;
-          this.setUserRole(Roles.DISTRIBUTOR);
-          console.log(distributor);
-        })
-      }
-    });
   }
 
   getProfileById(uid: string): Observable<Profile> {
@@ -88,57 +61,6 @@ export class UserAuthServiceProvider {
   
   getUserTokenPushNotification(): string {
     return this.tokenPushNotification;
-  }
-  
-  loadProfile(profileParam: any) {
-    //type User = Profile | Distributor;
-    let profile = {} as Profile;
-
-    profile.district = profileParam['district'];
-    profile.city = profileParam['city'];
-    profile.additionalAdress = profileParam['additionalAdress'];
-    profile.email = profileParam['email'];
-    profile.fullName = profileParam['fullName'];
-    profile.number = profileParam['number'];
-    profile.street = profileParam['street'];
-
-    return profile;
-  }
-
-  login() {
-    const authObserver = this.afAuth.authState.subscribe( user => {
-      if (user) {
-        this.setUserID(user.uid);               
-
-        this.cloudMessaging.listenToNotifications()
-        .subscribe((res) => {
-            if (res.tap) {
-              // since firebase sends always string as data you have to parse it
-              let data = JSON.parse(res.data)              
-              console.log(data);
-            }
-        })
-        if(this.platform.is('cordova')) {
-          console.log("Cordova");
-         // this.navCtrl.setRoot("AddProductPage");
-          // this.myApp.setClientMenu();
-          this.cloudMessaging.getToken(user.uid);
-        } else {
-          console.log("Not Cordova");
-         // this.navCtrl.setRoot("DistributorPage");
-          // this.myApp.setDistributorMenu();
-        }  
-      } else {
-       // this.navCtrl.setRoot('LoginPage');
-      }
-      authObserver.unsubscribe();        
-    });
-  }
-  
-  logout() {    
-    this.afAuth.auth.signOut().then(auth => {
-     // this.navCtrl.setRoot('LoginPage');
-    }).catch((e) => console.error(e));
   }
 
 }

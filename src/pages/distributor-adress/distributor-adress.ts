@@ -40,46 +40,47 @@ export class DistributorAdressPage {
   ionViewDidLoad() {
     this.adressList = new Array();
     this.adress = this.initAdress();
-    
+
     this.loadDistributor();
   }
-  
+
   loadDistributor() {
-    this.distributors$ = this.afDatabase.list<Profile>(`profile`, ref => 
+    this.distributors$ = this.afDatabase.list<Profile>(`profile`, ref =>
       ref.orderByChild("role")
-      .equalTo(Roles.DISTRIBUTOR)
+        .equalTo(Roles.DISTRIBUTOR)
     ).valueChanges();
   }
 
-loadAdressList() {
-  this.adressListObservable = this.afDatabase
-  .list<Distributor>(`distributor-by-id/${this.distributor.distributorId}`)
-  .snapshotChanges()      
-  .map(changes => {
-    return changes.map( c => ({
-      key: c.payload.key, ...c.payload.val()
-    }))
+  loadAdressList() {
+    this.adressListObservable = this.afDatabase
+      .list<Adress>(`distributor-by-id/${this.distributor.distributorId}`).valueChanges();
+
+    // .snapshotChanges()      
+    // .map(changes => {
+    //   return changes.map( c => ({
+    //     key: c.payload.key, ...c.payload.val()
+    //   }))
+    // }
+    // );
+
+    this.adressListObservable.forEach(adress => {
+      this.adressList = adress;
+    });
+    this.adressListObservable.take(1).subscribe(x => console.log(x))
   }
-);
 
-this.adressListObservable.forEach(adress => {
-  this.adressList = adress;
-});
-this.adressListObservable.take(1).subscribe(x => console.log(x))
-}
+  selectDistributor() {
+    this.distributor = this.selectedValue;
+    console.log(this.selectedValue)
+    this.loadAdressList();
+  }
 
-selectDistributor() {
-  this.distributor = this.selectedValue;
-  console.log(this.selectedValue)    
-  this.loadAdressList();
-}
-
-  setAdress(adressData) {    
+  setAdress(adressData) {
     this.adress.fullAdress = adressData.terms[0].value + "_" + adressData.terms[1].value + "_" + adressData.terms[2].value;
     this.adress.adressId = adressData.id;
   }
 
-  save(adress: Adress) {    
+  save(adress: Adress) {
     if (!this.validateAdress(adress)) {
       return;
     }
@@ -87,10 +88,10 @@ selectDistributor() {
     this.afDatabase.object(`distributor-by-adress/${adress.fullAdress}`).valueChanges().take(1)
       .subscribe(snapshot => {
         if (snapshot != null) {
-          console.log(snapshot);                        
+          console.log(snapshot);
           if (snapshot[`distributorId${adress.level}`]) {
-            this.alertService.showAlert("Aviso", "Endereço já cadastrado para este nível!");            
-          } else {            
+            this.alertService.showAlert("Aviso", "Endereço já cadastrado para este nível!");
+          } else {
             this.adress.distributorId1 = snapshot["distributorId1"] ? snapshot["distributorId1"] : null;
             this.adress.distributorId2 = snapshot["distributorId2"] ? snapshot["distributorId2"] : null;
             this.adress.distributorId3 = snapshot["distributorId3"] ? snapshot["distributorId3"] : null;
@@ -98,22 +99,22 @@ selectDistributor() {
             console.log("adress saved 1");
           }
         } else {
-          this.saveAdress(adress);          
+          this.saveAdress(adress);
           console.log("adress saved 2");
         }
-      });      
-      
+      });
+
   }
 
   saveAdress(adress: Adress) {
     this.adress[`distributorId${adress.level}`] = this.distributor.distributorId;
     this.afDatabase.object(`distributor-by-id/${this.distributor.distributorId}/${this.adress.fullAdress}`)
-    .set(this.adress);
+      .set(this.adress);
 
     this.afDatabase.object(`distributor-by-adress/${this.adress.fullAdress}`)
-    .set(this.adress)
-    .then(() => this.alertService.showAlert("Aviso", "Distribuidor salvo com sucesso"));
-    
+      .set(this.adress)
+      .then(() => this.alertService.showAlert("Aviso", "Distribuidor salvo com sucesso"));
+
     this.adressList.push(this.adress);
     this.adress = this.initAdress();
   }
@@ -123,8 +124,8 @@ selectDistributor() {
       return;
     }
     // this.adressService.add(adress);
-    let res = this.adressList   
-    .filter(item => item.fullAdress == adress.fullAdress);
+    let res = this.adressList
+      .filter(item => item.fullAdress == adress.fullAdress);
     console.log(res);
     if (res.length == 0) {
       // adress['distributorId'] = this.distributor.
@@ -149,7 +150,7 @@ selectDistributor() {
     return adress;
   }
 
-  validateAdress(adress: Adress):Boolean{
+  validateAdress(adress: Adress): Boolean {
     console.log("Adress");
     console.log(adress.fullAdress);
     if (adress == undefined || adress.fullAdress == "") {
@@ -157,19 +158,19 @@ selectDistributor() {
       return false;
     }
     if (adress.isFullStreet == undefined && adress.nInitial == undefined && adress.nFinal == undefined) {
-      this.alertService.showAlert("Aviso", "Favor informar o número do endereço ou selecionar como Rua Inteira!");      
+      this.alertService.showAlert("Aviso", "Favor informar o número do endereço ou selecionar como Rua Inteira!");
       return false;
     }
     return true;
   }
 
-  removeAdress(adress: Adress) {    
+  removeAdress(adress: Adress) {
     const index = this.adressList.indexOf(adress);
     if (index > -1) {
       this.adressList.splice(index, 1);
     }
-    
-    this.afDatabase.object(`distributor-by-id/${this.distributor.distributorId}/${adress.fullAdress}`).remove();  
+
+    this.afDatabase.object(`distributor-by-id/${this.distributor.distributorId}/${adress.fullAdress}`).remove();
     //TODO remover somente o id e se nao ficou sem id remove o registro
     this.adress[`distributorId${adress.level}`] = "";
     console.log("1 " + adress['distributorId1']);
@@ -179,7 +180,7 @@ selectDistributor() {
       console.log("1 " + `distributorId${adress.level} : ""`);
       this.afDatabase.object(`distributor-by-adress/${adress.fullAdress}`).remove();
     } else {
-      console.log("2" + `distributor-by-adress/${adress.fullAdress}` +" - "+`distributorId${adress.level} : ""`);
+      console.log("2" + `distributor-by-adress/${adress.fullAdress}` + " - " + `distributorId${adress.level} : ""`);
       adress[`distributorId${adress.level}`] = "";
       this.afDatabase.object(`distributor-by-adress/${adress.fullAdress}`).update(adress);
       //this.afDatabase.object(`distributor-by-adress/${adress.fullAdress}`).update(`{distributorId${adress.level} : ""}`);

@@ -16,16 +16,16 @@ export class MyApp {
 
   rootPage: any;
 
-  pages: Array<{title: string, component: any}>;
-  pagesClient: Array<{title: string, component: any}>;
-  pagesDistributor: Array<{title: string, component: any}>;
-  pagesAdmin: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
+  pagesClient: Array<{ title: string, component: any }>;
+  pagesDistributor: Array<{ title: string, component: any }>;
+  pagesAdmin: Array<{ title: string, component: any }>;
   isShowMenu: boolean;
 
   constructor(
-    public platform: Platform, 
-    public statusBar: StatusBar, 
-    public splashScreen: SplashScreen, 
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
     public afAuth: AngularFireAuth,
     public userAuthService: UserAuthServiceProvider,
     public events: Events,
@@ -34,22 +34,22 @@ export class MyApp {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pagesClient = [      
+    this.pagesClient = [
       { title: 'Cadastro', component: "ProfilePage" },
       { title: 'Comprar', component: "AddProductPage" },
       { title: 'Dê sua opnião', component: "CustomerSatisfactionPage" }
     ];
-    
+
     this.pagesDistributor = [
       { title: 'Cadastro', component: "ProfilePage" },
       { title: 'Pedidos', component: "OrderListPage" }
     ];
-    
+
     this.pagesAdmin = [
       { title: 'Cadastro', component: "ProfilePage" },
       { title: 'Produtos', component: "ProductPage" },
       { title: 'Distribuidor', component: "DistributorPage" },
-      { title: 'Endereços', component: "DistributorAdressPage" }      
+      { title: 'Endereços', component: "DistributorAdressPage" }
     ];
 
     // app.component.ts page (listen for the user created event after function is called)
@@ -57,7 +57,7 @@ export class MyApp {
       // user and time are the same arguments passed in `events.publish(user, time)`
       this.isShowMenu = true;
       console.log('Welcome', user, 'at', time);
-      const authObserver = this.afAuth.authState.subscribe( userAuth => {
+      const authObserver = this.afAuth.authState.subscribe(userAuth => {
         this.loadUser(userAuth.uid, userAuth.email);
       });
     });
@@ -71,32 +71,30 @@ export class MyApp {
       //this.statusBar.overlaysWebView(true);
       this.statusBar.backgroundColorByHexString('#FF6600');
       this.splashScreen.hide();
-      this.login();      
-      
+      this.login();
+
     });
   }
 
   login() {
-    const authObserver = this.afAuth.authState.subscribe( user => {
-      if(this.platform.is('cordova')) {
-        console.log("Cordova");        
-        this.cloudMessaging.getToken(user.uid);
-      } else {
-        console.log("Not Cordova");        
-      }  
+    const authObserver = this.afAuth.authState.subscribe(user => {
       if (user) {
+        if (this.platform.is('cordova')) {
+          console.log("Cordova");
+          this.cloudMessaging.getToken(user.uid);
+        }
         this.isShowMenu = true;
         this.loadUser(user.uid, user.email);
 
-        if(this.platform.is('cordova')) {          
+        if (this.platform.is('cordova')) {
           this.cloudMessaging.listenToNotifications()
-          .subscribe((res) => {
+            .subscribe((res) => {
               if (res.tap) {
                 // since firebase sends always string as data you have to parse it
-                let data = JSON.parse(res.data)              
+                let data = JSON.parse(res.data)
                 console.log(data);
               }
-          })
+            })
         }
       } else {
         this.rootPage = 'LoginPage';
@@ -112,25 +110,23 @@ export class MyApp {
       if (profile == null || profile.role == null) {
         this.rootPage = "ProfilePage";
         console.log("No roles!!!");
-      } else if (profile.role == Roles.ADMIN) {        
-        this.userAuthService.setUserRole(Roles.ADMIN);
-        this.rootPage = "DistributorAdressPage";
-        this.pages = this.pagesAdmin;
-        console.log("Admin");
-      } else if (profile.role == Roles.CLIENT) {
-        this.userAuthService.setClient(profile);
-        this.userAuthService.setUserRole(Roles.CLIENT);
-        this.rootPage = "AddProductPage";
-        this.pages = this.pagesClient;
-        console.log("Client");
-      } else if (profile.role == Roles.DISTRIBUTOR) {
-        this.distributorService.getDistributor(uid).subscribe(distributor => {
-          this.userAuthService.setDistributor(distributor);
-          this.userAuthService.setUserRole(Roles.DISTRIBUTOR);
+      } else {
+        this.userAuthService.setProfile(profile);
+        this.userAuthService.setUserRole(profile.role);
+
+        if (profile.role == Roles.ADMIN) {
+          this.rootPage = "DistributorAdressPage";
+          this.pages = this.pagesAdmin;
+          console.log("Admin");
+        } else if (profile.role == Roles.CLIENT) {
+          this.rootPage = "AddProductPage";
+          this.pages = this.pagesClient;
+          console.log("Client");
+        } else if (profile.role == Roles.DISTRIBUTOR) {
           this.rootPage = "OrderListPage";
           this.pages = this.pagesDistributor;
-          console.log("Dist");
-        })
+          console.log("Client");
+        }
       }
     });
   }
@@ -141,7 +137,7 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  logout() {    
+  logout() {
     this.isShowMenu = false;
     this.afAuth.auth.signOut().then(auth => {
       this.nav.setRoot('LoginPage');

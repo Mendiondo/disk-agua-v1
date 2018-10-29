@@ -57,6 +57,19 @@ export class BasketServiceProvider {
       [`orders-by-dist-id/${order.adress.distributorId1}/${order.id}`] : order
     })
   }
+  
+  updateOrderField(order: Order, field: string, data: any): Promise<any> {
+    let distributorId = this.getCurrentDistributorId(order);
+
+    return firebase.database().ref().update({                
+      [`orders-by-user-id/${order.user.userid}/${order.id}/${field}`] : data,
+      [`orders-by-dist-id/${distributorId}/${order.id}/${field}`] : data
+    })
+  }
+
+  getCurrentDistributorId(order: Order) : string {
+    return order.adress[`distributorId${order.distributorAdressLevel}`];
+  }
 
   sendPushToDistributor(order: Order, userId: string) {
     (this.afDatabase.object(`devices/${userId}`).valueChanges() as Observable<Device>).take(1)

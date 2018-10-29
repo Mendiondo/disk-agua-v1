@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Order } from '../../models/order';
 import { OrderStatus } from '../../models/order-status';
@@ -24,7 +23,6 @@ export class BasketPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private basketService: BasketServiceProvider,
-    private afDatabase: AngularFireDatabase,
     private auth: AngularFireAuth,
     private userAuthService: UserAuthServiceProvider,
     private alertService: AlertServiceProvider,
@@ -44,27 +42,25 @@ export class BasketPage {
 
   checkout() {
     let userId = this.auth.auth.currentUser.uid;
-    this.afDatabase.object(`profile/${userId}`).valueChanges().take(1)
-      .subscribe(profileParam => {
+    this.userAuthService.getProfileById(userId)
+      .subscribe(profile => {
         let date = new Date();
-
-        this.order.user = this.userAuthService.loadProfile(profileParam);
+        this.order.user = profile;
         this.order.dtOrder = date.toUTCString();
         this.order.status = OrderStatus.EM_ABERTO;
 
         let fullAdress = this.distributorService.getFullAdress(this.order);
         this.distributorService.distributorByAdress(fullAdress).subscribe(adress => {
             this.order.adress = adress;
-            this.distributorService.distributorById(fullAdress, adress).subscribe(distributor => {
-                this.order.distributor = distributor;
-                console.log("distributor - " + distributor);
+            this.order.distributorAdressLevel = 1;
+            // this.distributorService.distributorById(fullAdress, adress).subscribe(distributor => {
+                // this.order.distributor = distributor;                
                                 
                 this.basketService.createOrder(this.order, userId).then(() =>{
                   this.alertService.showAlert("Aviso", "Compra efetuada com sucesso!!!");
                   this.basketService.sendPushToDistributor(this.order, userId);
                 });
-              });
-
+              // });
           });
       }, error => {
         this.alertService.showAlert("Alerta", "Favor atualizar seu cadastro!");
@@ -74,16 +70,6 @@ export class BasketPage {
 
   goBack() {
     this.navCtrl.pop();
-  }
-
-  getShortOrder(order: Order, pushKey: string): Order {
-    let shortOrder = {} as Order;
-    shortOrder.dtOrder = order.dtOrder;
-    shortOrder.status = order.status;
-    shortOrder.status = order.status;
-    shortOrder.id = pushKey;
-
-    return shortOrder;
   }
 
 }

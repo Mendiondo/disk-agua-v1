@@ -59,12 +59,13 @@ export class ProfilePage implements OnInit {
         });
     }
 
-    createProfile() {
+    saveProfile() {
         this.auth.authState.take(1).subscribe(auth => {
             this.profile.role = Roles.CLIENT;
+            this.profile.userid = auth.uid;
             this.afDatabase.object(`profile/${auth.uid}`)
                 .set(this.profile)
-                .then(() => {                    
+                .then(() => {
                     this.navCtrl.setRoot("AddProductPage");
                 })
         })
