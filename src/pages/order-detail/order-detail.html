@@ -53,7 +53,7 @@
         </ion-row>
         <ion-row *ngIf="!isEditDtDelivery && order.status == 'Em Aberto'">
           <ion-col col-6>
-            <button ion-button full>Cancelar Pedido</button>            
+            <button ion-button full (click)="cancelOrder()">Cancelar Pedido</button>            
           </ion-col>
           <ion-col col-6>
             <button ion-button full>Aceitar Pedido</button>            
@@ -61,10 +61,10 @@
         </ion-row>
         <ion-row *ngIf="!isEditDtDelivery && order.status == 'Aceito'">
           <ion-col col-6>
-            <button ion-button full>Cancelar Pedido</button>            
+            <button ion-button full (click)="cancelOrder()">Cancelar Pedido</button>            
           </ion-col>
             <ion-col col-6>
-            <button ion-button full>Finalizar Pedido</button>            
+            <button ion-button full (click)="finishOrder()">Finalizar Pedido</button>            
           </ion-col>
         </ion-row>
       </ion-grid>

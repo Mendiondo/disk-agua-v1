@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-navbar>    
+  <ion-navbar>
     <ion-title>Carrinho</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>  
+<ion-content padding>
   <ion-list>
     <ion-item *ngFor="let product of products">
       <div text-wrap>
@@ -20,26 +20,25 @@
     </ion-item>
   </ion-list>
 
-  <ion-list radio-group class="payment">
+  <ion-list radio-group class="payment" [(ngModel)]="paymentMethod">
     <ion-list-header>
       Forma de Pagamento
     </ion-list-header>
-
     <ion-item>
       <ion-label>Cartão</ion-label>
       <ion-radio value="cartao"></ion-radio>
     </ion-item>
-
     <ion-item>
       <ion-label>Dinheiro</ion-label>
       <ion-radio value="dinheiro"></ion-radio>
     </ion-item>
   </ion-list>
 
-  <ion-item>
-      <ion-label color="primary" >Troco para</ion-label>
-      <ion-input name="payment" type="number" pattern="[0-9]*"></ion-input>
+  <ion-item *ngIf="paymentMethod === 'dinheiro'">
+    <ion-label color="primary">Troco para</ion-label>
+    <ion-input name="payment" type="number" pattern="[0-9]*"></ion-input>
   </ion-item>
+    
   <div text-center>
     <button ion-button color="primary" (click)="checkout()">Finalizar Compra</button>
   </div>

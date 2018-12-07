@@ -89,5 +89,6 @@
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-firebase" spec="^1.0.5" />
-    <engine name="android" spec="6.3.0" />
+    <plugin name="com.paypal.cordova.mobilesdk" spec="^3.5.0" />
+    <engine name="android" spec="7.0.0" />
 </widget>
